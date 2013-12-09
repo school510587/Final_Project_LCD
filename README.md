@@ -1,4 +1,4 @@
-Final_Project_LCD
-=================
-
-LCD library for final project
+Final Project LCD Library
+===========================
+Author: Tim Hsu
+ 
