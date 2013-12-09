@@ -33,10 +33,13 @@ static void LCD_task(void *pvParameters);
  */
 void EXTI0_IRQHandler(void)
 {
-	UserButtonPressed = 0x01;
-
 	/* Clear the EXTI line pending bit */
 	EXTI_ClearITPendingBit(USER_BUTTON_EXTI_LINE);
+	if(UserButtonPressed){
+		UserButtonPressed=0x00;
+	}else
+		UserButtonPressed=0x01;
+
 }
 
 #include "LCD/LCDConfig.h"
@@ -49,6 +52,7 @@ int main(void)
 	RCC_GetClocksFreq(&RCC_Clocks);
 	SysTick_Config(RCC_Clocks.HCLK_Frequency / 100);
 
+	FLASH_ProgramWord(TESTRESULT_ADDRESS, ALLTEST_PASS);
 	SystemInit();
 	//while(TimingDelay);
 
@@ -99,10 +103,14 @@ void GPIO_Output_Config(void){
 
 static void LCD_task(void *pvParameters)
 {
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 	GPIO_Output_Config();
 	while (1)
 	{
-		GPIO_SetBits(GPIOE, GPIO_Pin_10);
+		if(UserButtonPressed)
+			GPIO_SetBits(GPIOE, GPIO_Pin_10);
+		else
+			GPIO_ResetBits(GPIOE, GPIO_Pin_10);
 		/* Toggle LED4 */
 		STM_EVAL_LEDOn(LED4);
 		vTaskDelay(100);
