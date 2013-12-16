@@ -19,7 +19,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_it.h"
@@ -168,7 +168,7 @@ void SysTick_Handler(void)
 void EXTI0_IRQHandler(void)
 {
   UserButtonPressed = 0x01;
-  
+
   /* Clear the EXTI line pending bit */
   EXTI_ClearITPendingBit(USER_BUTTON_EXTI_LINE);
 }

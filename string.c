@@ -1,12 +1,12 @@
 #include <stddef.h>
 #include <stdint.h>
 #include <limits.h>
- 
+
 #define ALIGN (sizeof(size_t))
-#define ONES ((size_t)-1/UCHAR_MAX)                                                                      
+#define ONES ((size_t)-1/UCHAR_MAX)
 #define HIGHS (ONES * (UCHAR_MAX/2+1))
 #define HASZERO(x) ((x)-ONES & ~(x) & HIGHS)
- 
+
 #define SS (sizeof(size_t))
 void *memset(void *dest, int c, size_t n)
 {
@@ -20,7 +20,7 @@ void *memset(void *dest, int c, size_t n)
 	}
 	return dest;
 }
- 
+
 char *strncpy(char *dest, const char *src, size_t n)
 {
 	const unsigned char *s = (const unsigned char *)src;

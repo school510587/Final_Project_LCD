@@ -44,17 +44,17 @@ _ssize_t _read_r(struct _reent *r, int file, void *ptr, size_t len)
 #if 0
 // old version - no longer in use
 _ssize_t _read_r(
-    struct _reent *r, 
-    int file, 
-    void *ptr, 
+    struct _reent *r,
+    int file,
+    void *ptr,
     size_t len)
 {
 	char c;
 	int  i;
 	unsigned char *p;
-	
+
 	p = (unsigned char*)ptr;
-	
+
 	for (i = 0; i < len; i++) {
 		// c = uart0Getch();
 		c = uart0GetchW();
@@ -70,35 +70,35 @@ _ssize_t _read_r(
 #endif
 
 _ssize_t _write_r (
-    struct _reent *r, 
-    int file, 
-    const void *ptr, 
+    struct _reent *r,
+    int file,
+    const void *ptr,
     size_t len)
 {
 	int i;
 	const unsigned char *p;
-	
+
 	p = (const unsigned char*) ptr;
-	
+
 	for (i = 0; i < len; i++) {
 		if (*p == '\n' ) uartPutch('\r');
 		uartPutch(*p++);
 	}
-	
+
 	return len;
 }
 
 int _close_r(
-    struct _reent *r, 
+    struct _reent *r,
     int file)
 {
 	return 0;
 }
 
 _off_t _lseek_r(
-    struct _reent *r, 
-    int file, 
-    _off_t ptr, 
+    struct _reent *r,
+    int file,
+    _off_t ptr,
     int dir)
 {
 	return (_off_t)0;	/*  Always indicate we are at file beginning.	*/
@@ -106,12 +106,12 @@ _off_t _lseek_r(
 
 
 int _fstat_r(
-    struct _reent *r, 
-    int file, 
+    struct _reent *r,
+    int file,
     struct stat *st)
 {
 	/*  Always set as character device.				*/
-	st->st_mode = S_IFCHR;	
+	st->st_mode = S_IFCHR;
 		/* assigned to strong type with implicit 	*/
 		/* signed/unsigned conversion.  Required by 	*/
 		/* newlib.					*/
@@ -130,7 +130,7 @@ int _isatty(int file)
 void _exit (int n) {
 label:  goto label; /* endless loop */
 }
-#endif 
+#endif
 
 /* "malloc clue function" */
 
@@ -154,7 +154,7 @@ static char *heap_ptr;		/* Points to current end of the heap.	*/
 /* messages must be suppressed.						*/
 
 void * _sbrk_r(
-    struct _reent *_s_r, 
+    struct _reent *_s_r,
     ptrdiff_t nbytes)
 {
 	char  *base;		/*  errno should be set to  ENOMEM on error	*/
@@ -164,6 +164,6 @@ void * _sbrk_r(
 	}
 	base = heap_ptr;	/*  Point to end of heap.			*/
 	heap_ptr += nbytes;	/*  Increase heap.				*/
-	
+
 	return base;		/*  Return pointer to start of new heap area.	*/
 }

@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 
@@ -33,16 +33,16 @@
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
-  
+
 /** @defgroup usbd_audio
   * @brief This file is the Header file for USBD_audio.c
   * @{
-  */ 
+  */
 
 
 /** @defgroup usbd_audio_Exported_Defines
   * @{
-  */ 
+  */
 /* Audio Commands enmueration */
 typedef enum
 {
@@ -69,7 +69,7 @@ typedef enum
 
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
@@ -77,41 +77,41 @@ typedef enum
   */
 /**
   * @}
-  */ 
+  */
 
 
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBD_CORE_Exported_Variables
   * @{
-  */ 
+  */
 
 extern AUDIO_FOPS_TypeDef  AUDIO_OUT_fops;
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
 /**
   * @}
-  */ 
+  */
 
 #endif  /* __USB_AUDIO_OUT_IF_H_ */
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
-  
+  */
+
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

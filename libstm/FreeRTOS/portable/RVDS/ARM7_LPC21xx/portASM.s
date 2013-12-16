@@ -1,6 +1,6 @@
 ;/*
 ;    FreeRTOS V7.1.1 - Copyright (C) 2012 Real Time Engineers Ltd.
-;	
+;
 ;
 ;    ***************************************************************************
 ;     *                                                                       *
@@ -72,7 +72,7 @@ T0MATCHBIT	EQU	0x00000001
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-; Starting the first task is done by just restoring the context 
+; Starting the first task is done by just restoring the context
 ; setup by pxPortInitialiseStack
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 vPortStartFirstTask
@@ -100,17 +100,17 @@ vPortYieldProcessor
 
 	PRESERVE8
 
-	; Within an IRQ ISR the link register has an offset from the true return 
-	; address, but an SWI ISR does not.  Add the offset manually so the same 
+	; Within an IRQ ISR the link register has an offset from the true return
+	; address, but an SWI ISR does not.  Add the offset manually so the same
 	; ISR return code can be used in both cases.
 	ADD	LR, LR, #4
 
 	; Perform the context switch.
-	portSAVE_CONTEXT					; Save current task context				
+	portSAVE_CONTEXT					; Save current task context
 	LDR R0, =vTaskSwitchContext			; Get the address of the context switch function
 	MOV LR, PC							; Store the return address
 	BX	R0								; Call the contedxt switch function
-	portRESTORE_CONTEXT					; restore the context of the selected task	
+	portRESTORE_CONTEXT					; restore the context of the selected task
 
 
 
@@ -119,30 +119,30 @@ vPortYieldProcessor
 ; Only used if portUSE_PREEMPTION is set to 1 in portmacro.h
 ;
 ; Uses timer 0 of LPC21XX Family
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 vPreemptiveTick
 
 	PRESERVE8
 
-	portSAVE_CONTEXT					; Save the context of the current task.	
+	portSAVE_CONTEXT					; Save the context of the current task.
 
-	LDR R0, =vTaskIncrementTick			; Increment the tick count.  
+	LDR R0, =vTaskIncrementTick			; Increment the tick count.
 	MOV LR, PC							; This may make a delayed task ready
 	BX R0								; to run.
-	
-	LDR R0, =vTaskSwitchContext			; Find the highest priority task that 
+
+	LDR R0, =vTaskSwitchContext			; Find the highest priority task that
 	MOV LR, PC							; is ready to run.
 	BX R0
-	
+
 	MOV R0, #T0MATCHBIT					; Clear the timer event
 	LDR R1, =T0IR
-	STR R0, [R1] 
+	STR R0, [R1]
 
-	LDR	R0, =VICVECTADDR				; Acknowledge the interrupt	
+	LDR	R0, =VICVECTADDR				; Acknowledge the interrupt
 	STR	R0,[R0]
 
-	portRESTORE_CONTEXT					; Restore the context of the highest 
+	portRESTORE_CONTEXT					; Restore the context of the highest
 										; priority task that is ready to run.
 	END
 

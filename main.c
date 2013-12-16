@@ -1,4 +1,3 @@
-
 /* Includes ------------------------------------------------------------------*/
 
 //#include "FreeRTOSConfig.h"
@@ -58,7 +57,7 @@ int main(void)
 
 
 	/* Initialize LEDs and User_Button on STM32F4-Discovery --------------------*/
-	STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_EXTI); 
+	STM_EVAL_PBInit(BUTTON_USER, BUTTON_MODE_EXTI);
 
 	/* Initialize LEDs to be managed by GPIO */
 	STM_EVAL_LEDInit(LED4);
@@ -82,7 +81,7 @@ int main(void)
 			tskIDLE_PRIORITY + 5, NULL);
 
 	/* Start running the tasks. */
-	vTaskStartScheduler(); 
+	vTaskStartScheduler();
 
 	return 0;
 }
@@ -105,11 +104,10 @@ static void LCD_task(void *pvParameters)
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 	GPIO_Output_Config();
 	GPIO_ResetBits(GPIOE, LCD_RS_Pin);
-	GPIO_ResetBits(GPIOE, LCD_RW_Pin);	
+	GPIO_ResetBits(GPIOE, LCD_RW_Pin);
 	GPIO_ResetBits(GPIOE, LCD_E_Pin);
 
 	LCD_InitTypeDef lcd={.GPIO=GPIOE, .RS_Pin=GPIO_Pin_11, .RW_Pin=GPIO_Pin_12, .E_Pin=GPIO_Pin_13, .DB_Pins={GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10}};
-	
 
 	LCD_Init(&lcd);
 	LCD_ControllerTypeDef lcdctl=new_LCD_Controller(&lcd);
@@ -137,7 +135,7 @@ static void LCD_task(void *pvParameters)
  */
 void Fail_Handler(void)
 {
-	/* Erase last sector */ 
+	/* Erase last sector */
 	FLASH_EraseSector(FLASH_Sector_11, VoltageRange_3);
 	/* Write FAIL code at last word in the flash memory */
 	FLASH_ProgramWord(TESTRESULT_ADDRESS, ALLTEST_FAIL);
@@ -158,10 +156,6 @@ void TimingDelay_Decrement(void)
   }
 }
 
-
-
 void vApplicationTickHook()
 {
 }
-
-

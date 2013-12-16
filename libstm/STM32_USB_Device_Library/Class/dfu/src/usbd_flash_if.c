@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_flash_if.h"
@@ -62,7 +62,7 @@ uint16_t FLASH_If_Init(void)
 {
   /* Unlock the internal flash */
   FLASH_Unlock();
-  
+
   return MAL_OK;
 }
 
@@ -76,7 +76,7 @@ uint16_t FLASH_If_DeInit(void)
 {
   /* Lock the internal flash */
   FLASH_Lock();
-  
+
   return MAL_OK;
 }
 
@@ -141,13 +141,13 @@ uint16_t FLASH_If_Erase(uint32_t Add)
   }
   else
   {
-    return MAL_FAIL;    
+    return MAL_FAIL;
   }
 #elif defined(STM32F10X_CL)
   /* Call the standard Flash erase function */
-  FLASH_ErasePage(Add);  
+  FLASH_ErasePage(Add);
 #endif /* STM32F2XX */
-  
+
   return MAL_OK;
 }
 
@@ -161,7 +161,7 @@ uint16_t FLASH_If_Erase(uint32_t Add)
 uint16_t FLASH_If_Write(uint32_t Add, uint32_t Len)
 {
   uint32_t idx = 0;
-  
+
   if  (Len & 0x3) /* Not an aligned data */
   {
     for (idx = Len; idx < ((Len & 0xFFFC) + 4); idx++)
@@ -169,7 +169,7 @@ uint16_t FLASH_If_Write(uint32_t Add, uint32_t Len)
       MAL_Buffer[idx] = 0xFF;
     }
   }
-  
+
   /* Data received are Word multiple */
   for (idx = 0; idx <  Len; idx = idx + 4)
   {
@@ -195,7 +195,7 @@ uint8_t *FLASH_If_Read (uint32_t Add, uint32_t Len)
     *(uint32_t*)(MAL_Buffer + idx) = *(uint32_t *)(Add + idx);
   }
   return (uint8_t*)(MAL_Buffer);
-#else  
+#else
   return  (uint8_t *)(Add);
 #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
 }

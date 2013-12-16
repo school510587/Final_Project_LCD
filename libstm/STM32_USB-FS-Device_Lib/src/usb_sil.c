@@ -3,7 +3,7 @@
 * Author             : MCD Application Team
 * Version            : V3.3.0
 * Date               : 21-March-2011
-* Description        : Simplified Interface Layer for Global Initialization and 
+* Description        : Simplified Interface Layer for Global Initialization and
 *                      Endpoint Rea/Write operations.
 ********************************************************************************
 * THE PRESENT FIRMWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -35,19 +35,19 @@
 uint32_t USB_SIL_Init(void)
 {
 #ifndef STM32F10X_CL
-  
+
   /* USB interrupts initialization */
   /* clear pending interrupts */
   _SetISTR(0);
   wInterrupt_Mask = IMR_MSK;
   /* set interrupts mask */
   _SetCNTR(wInterrupt_Mask);
-  
+
 #else
-  
+
   /* Perform OTG Device initialization procedure (including EP0 init) */
   OTG_DEV_Init();
-  
+
 #endif /* STM32F10X_CL */
 
   return 0;
@@ -72,12 +72,12 @@ uint32_t USB_SIL_Write(uint8_t bEpAddr, uint8_t* pBufferPointer, uint32_t wBuffe
 
   /* Update the data length in the control register */
   SetEPTxCount((bEpAddr & 0x7F), wBufferSize);
-  
+
 #else
-  
+
    /* Use the PCD interface layer function to write to the selected endpoint */
-   PCD_EP_Write (bEpAddr, pBufferPointer, wBufferSize); 
-   
+   PCD_EP_Write (bEpAddr, pBufferPointer, wBufferSize);
+
 #endif /* STM32F10X_CL */
 
   return 0;
@@ -87,7 +87,7 @@ uint32_t USB_SIL_Write(uint8_t bEpAddr, uint8_t* pBufferPointer, uint32_t wBuffe
 * Function Name  : USB_SIL_Read
 * Description    : Write a buffer of data to a selected endpoint.
 * Input          : - bEpAddr: The address of the non control endpoint.
-*                  - pBufferPointer: The pointer to which will be saved the 
+*                  - pBufferPointer: The pointer to which will be saved the
 *                     received data buffer.
 * Output         : None.
 * Return         : Number of received data (in Bytes).
@@ -100,23 +100,23 @@ uint32_t USB_SIL_Read(uint8_t bEpAddr, uint8_t* pBufferPointer)
 
   /* Get the number of received data on the selected Endpoint */
   DataLength = GetEPRxCount(bEpAddr & 0x7F);
-  
+
   /* Use the memory interface function to write to the selected endpoint */
   PMAToUserBufferCopy(pBufferPointer, GetEPRxAddr(bEpAddr & 0x7F), DataLength);
 
 #else
-  
+
   USB_OTG_EP *ep;
 
   /* Get the structure pointer of the selected Endpoint */
   ep = PCD_GetOutEP(bEpAddr);
-  
+
   /* Get the number of received data */
   DataLength = ep->xfer_len;
-  
+
   /* Use the PCD interface layer function to read the selected endpoint */
   PCD_EP_Read (bEpAddr, pBufferPointer, DataLength);
-  
+
 #endif /* STM32F10X_CL */
 
   /* Return the number of received data */

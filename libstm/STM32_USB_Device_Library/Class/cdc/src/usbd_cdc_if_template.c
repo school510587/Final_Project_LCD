@@ -17,10 +17,10 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
-#ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED 
-#pragma     data_alignment = 4 
+#ifdef USB_OTG_HS_INTERNAL_DMA_ENABLED
+#pragma     data_alignment = 4
 #endif /* USB_OTG_HS_INTERNAL_DMA_ENABLED */
 
 /* Includes ------------------------------------------------------------------*/
@@ -31,7 +31,7 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-/* These are external variables imported from CDC core to be used for IN 
+/* These are external variables imported from CDC core to be used for IN
    transfer management. */
 extern uint8_t  APP_Rx_Buffer []; /* Write CDC received data in this buffer.
                                      These data will be sent over USB IN endpoint
@@ -47,7 +47,7 @@ static uint16_t TEMPLATE_Ctrl     (uint32_t Cmd, uint8_t* Buf, uint32_t Len);
 static uint16_t TEMPLATE_DataTx   (uint8_t* Buf, uint32_t Len);
 static uint16_t TEMPLATE_DataRx (uint8_t* Buf, uint32_t Len);
 
-CDC_IF_Prop_TypeDef TEMPLATE_fops = 
+CDC_IF_Prop_TypeDef TEMPLATE_fops =
 {
   TEMPLATE_Init,
   TEMPLATE_DeInit,
@@ -67,8 +67,8 @@ CDC_IF_Prop_TypeDef TEMPLATE_fops =
 static uint16_t TEMPLATE_Init(void)
 {
   /*
-     Add your initialization code here 
-  */  
+     Add your initialization code here
+  */
   return USBD_OK;
 }
 
@@ -81,8 +81,8 @@ static uint16_t TEMPLATE_Init(void)
 static uint16_t TEMPLATE_DeInit(void)
 {
   /*
-     Add your deinitialization code here 
-  */  
+     Add your deinitialization code here
+  */
   return USBD_OK;
 }
 
@@ -90,13 +90,13 @@ static uint16_t TEMPLATE_DeInit(void)
 /**
   * @brief  TEMPLATE_Ctrl
   *         Manage the CDC class requests
-  * @param  Cmd: Command code            
+  * @param  Cmd: Command code
   * @param  Buf: Buffer containing command data (request parameters)
   * @param  Len: Number of data to be sent (in bytes)
   * @retval Result of the opeartion: USBD_OK if all operations are OK else USBD_FAIL
   */
 static uint16_t TEMPLATE_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
-{ 
+{
   switch (Cmd)
   {
   case SEND_ENCAPSULATED_COMMAND:
@@ -133,8 +133,8 @@ static uint16_t TEMPLATE_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 
   case SEND_BREAK:
      /* Add your code here */
-    break;    
-    
+    break;
+
   default:
     break;
   }
@@ -144,7 +144,7 @@ static uint16_t TEMPLATE_Ctrl (uint32_t Cmd, uint8_t* Buf, uint32_t Len)
 
 /**
   * @brief  TEMPLATE_DataTx
-  *         CDC received data to be send over USB IN endpoint are managed in 
+  *         CDC received data to be send over USB IN endpoint are managed in
   *         this function.
   * @param  Buf: Buffer of data to be sent
   * @param  Len: Number of data to be sent (in bytes)
@@ -161,27 +161,27 @@ static uint16_t TEMPLATE_DataTx (uint8_t* Buf, uint32_t Len)
 
   /* Increment the in pointer */
   APP_Rx_ptr_in++;
-  
+
   /* To avoid buffer overflow */
   if(APP_Rx_ptr_in == APP_RX_DATA_SIZE)
   {
     APP_Rx_ptr_in = 0;
-  }  
-  
+  }
+
   return USBD_OK;
 }
 
 /**
   * @brief  TEMPLATE_DataRx
-  *         Data received over USB OUT endpoint are sent over CDC interface 
+  *         Data received over USB OUT endpoint are sent over CDC interface
   *         through this function.
-  *           
+  *
   *         @note
-  *         This function will block any OUT packet reception on USB endpoint 
+  *         This function will block any OUT packet reception on USB endpoint
   *         untill exiting this function. If you exit this function before transfer
-  *         is complete on CDC interface (ie. using DMA controller) it will result 
+  *         is complete on CDC interface (ie. using DMA controller) it will result
   *         in receiving more data while previous ones are still not sent.
-  *                 
+  *
   * @param  Buf: Buffer of data to be received
   * @param  Len: Number of data received (in bytes)
   * @retval Result of the opeartion: USBD_OK if all operations are OK else USBD_FAIL
@@ -189,13 +189,13 @@ static uint16_t TEMPLATE_DataTx (uint8_t* Buf, uint32_t Len)
 static uint16_t TEMPLATE_DataRx (uint8_t* Buf, uint32_t Len)
 {
   uint32_t i;
-  
+
   /* Send the received buffer */
   for (i = 0; i < Len; i++)
   {
     /* XXXX_SendData(XXXX, *(Buf + i) ); */
-  } 
- 
+  }
+
   return USBD_OK;
 }
 

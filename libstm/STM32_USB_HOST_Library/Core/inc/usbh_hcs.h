@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Define to prevent recursive  ----------------------------------------------*/
 #ifndef __USBH_HCS_H
@@ -35,11 +35,11 @@
 /** @addtogroup USBH_LIB_CORE
 * @{
 */
-  
+
 /** @defgroup USBH_HCS
   * @brief This file is the header file for usbh_hcs.c
   * @{
-  */ 
+  */
 
 /** @defgroup USBH_HCS_Exported_Defines
   * @{
@@ -52,29 +52,29 @@
 #define HC_USED_MASK     0x7FFF
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HCS_Exported_Types
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup USBH_HCS_Exported_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HCS_Exported_Variables
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HCS_Exported_FunctionsPrototype
   * @{
@@ -101,7 +101,7 @@ uint8_t USBH_Modify_Channel (USB_OTG_CORE_HANDLE *pdev,
                             uint16_t mps);
 /**
   * @}
-  */ 
+  */
 
 
 
@@ -110,15 +110,15 @@ uint8_t USBH_Modify_Channel (USB_OTG_CORE_HANDLE *pdev,
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
 * @}
-*/ 
+*/
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
 

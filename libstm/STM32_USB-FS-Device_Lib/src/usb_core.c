@@ -184,7 +184,7 @@ uint8_t *Standard_GetStatus(uint16_t Length)
     else
     {
       ClrBit(StatusInfo0, 1);
-    }      
+    }
 
     /* Bus-powered */
     if (ValBit(Feature, 6))
@@ -458,9 +458,9 @@ void DataStageOut(void)
     pEPinfo->Usb_rLength -= Length;
     pEPinfo->Usb_rOffset += Length;
 
-  #ifdef STM32F10X_CL  
-    PCD_EP_Read(ENDP0, Buffer, Length); 
-  #else  
+  #ifdef STM32F10X_CL
+    PCD_EP_Read(ENDP0, Buffer, Length);
+  #else
     PMAToUserBufferCopy(Buffer, GetEPRxAddr(ENDP0), Length);
   #endif  /* STM32F10X_CL */
   }
@@ -515,20 +515,20 @@ void DataStageIn(void)
       ControlState = LAST_IN_DATA;
       Data_Mul_MaxPacketSize = FALSE;
     }
-    else 
+    else
     {
       /* No more data to send so STALL the TX Status*/
       ControlState = WAIT_STATUS_OUT;
 
-    #ifdef STM32F10X_CL      
+    #ifdef STM32F10X_CL
       PCD_EP_Read (ENDP0, 0, 0);
-    #endif  /* STM32F10X_CL */ 
-    
-    #ifndef STM32F10X_CL 
+    #endif  /* STM32F10X_CL */
+
+    #ifndef STM32F10X_CL
       vSetEPTxStatus(EP_TX_STALL);
-    #endif  /* STM32F10X_CL */ 
+    #endif  /* STM32F10X_CL */
     }
-    
+
     goto Expect_Status_Out;
   }
 
@@ -544,9 +544,9 @@ void DataStageIn(void)
 
 #ifdef STM32F10X_CL
   PCD_EP_Write (ENDP0, DataBuffer, Length);
-#else   
+#else
   UserToPMABufferCopy(DataBuffer, GetEPTxAddr(ENDP0), Length);
-#endif /* STM32F10X_CL */ 
+#endif /* STM32F10X_CL */
 
   SetEPTxCount(ENDP0, Length);
 
@@ -797,7 +797,7 @@ void Data_Setup0(void)
     }
 
   }
-  
+
   if (CopyRoutine)
   {
     pInformation->Ctrl_Info.Usb_wOffset = wOffset;
@@ -835,13 +835,13 @@ void Data_Setup0(void)
   {
     /* Device ==> Host */
     __IO uint32_t wLength = pInformation->USBwLength;
-     
+
     /* Restrict the data length to be the one host asks for */
     if (pInformation->Ctrl_Info.Usb_wLength > wLength)
     {
       pInformation->Ctrl_Info.Usb_wLength = wLength;
     }
-    
+
     else if (pInformation->Ctrl_Info.Usb_wLength < pInformation->USBwLength)
     {
       if (pInformation->Ctrl_Info.Usb_wLength < pProperty->MaxPacketSize)
@@ -852,7 +852,7 @@ void Data_Setup0(void)
       {
         Data_Mul_MaxPacketSize = TRUE;
       }
-    }   
+    }
 
     pInformation->Ctrl_Info.PacketSize = pProperty->MaxPacketSize;
     DataStageIn();
@@ -885,12 +885,12 @@ uint8_t Setup0_Process(void)
 #ifdef STM32F10X_CL
   USB_OTG_EP *ep;
   uint16_t offset = 0;
- 
+
   ep = PCD_GetOutEP(ENDP0);
   pBuf.b = ep->xfer_buff;
-#else  
+#else
   uint16_t offset = 1;
-  
+
   pBuf.b = PMAAddr + (uint8_t *)(_GetEPRxAddr(ENDP0) * 2); /* *2 for 32 bits addr */
 #endif /* STM32F10X_CL */
 
@@ -1012,10 +1012,10 @@ uint8_t Out0_Process(void)
 *******************************************************************************/
 uint8_t Post0_Process(void)
 {
-#ifdef STM32F10X_CL  
+#ifdef STM32F10X_CL
   USB_OTG_EP *ep;
 #endif /* STM32F10X_CL */
-      
+
   SetEPRxCount(ENDP0, Device_Property.MaxPacketSize);
 
   if (pInformation->ControlState == STALLED)
@@ -1031,17 +1031,17 @@ uint8_t Post0_Process(void)
     ep = PCD_GetInEP(0);
     ep->is_in = 0;
     OTGD_FS_EP0StartXfer(ep);
-    
+
     vSetEPTxStatus(EP_TX_VALID);
   }
-  
-  else if ((pInformation->ControlState == IN_DATA) || 
+
+  else if ((pInformation->ControlState == IN_DATA) ||
       (pInformation->ControlState == WAIT_STATUS_IN))
   {
     ep = PCD_GetInEP(0);
     ep->is_in = 1;
-    OTGD_FS_EP0StartXfer(ep);    
-  }  
+    OTGD_FS_EP0StartXfer(ep);
+  }
 #endif /* STM32F10X_CL */
 
   return (pInformation->ControlState == PAUSE);
@@ -1056,9 +1056,9 @@ uint8_t Post0_Process(void)
 *******************************************************************************/
 void SetDeviceAddress(uint8_t Val)
 {
-#ifdef STM32F10X_CL 
+#ifdef STM32F10X_CL
   PCD_EP_SetAddress ((uint8_t)Val);
-#else 
+#else
   uint32_t i;
   uint32_t nEP = Device_Table.Total_Endpoint;
 
@@ -1068,7 +1068,7 @@ void SetDeviceAddress(uint8_t Val)
     _SetEPAddress((uint8_t)i, (uint8_t)i);
   } /* for */
   _SetDADDR(Val | DADDR_EF); /* set device address and enable function */
-#endif  /* STM32F10X_CL */  
+#endif  /* STM32F10X_CL */
 }
 
 /*******************************************************************************

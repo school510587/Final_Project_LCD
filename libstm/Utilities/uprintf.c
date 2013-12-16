@@ -181,7 +181,7 @@ static int uprint(char **out, const char *format, va_list args )
 int uprintf(const char *format, ...)
 {
         va_list args;
-        
+
         va_start( args, format );
         return uprint( 0, format, args );
 }
@@ -189,7 +189,7 @@ int uprintf(const char *format, ...)
 int usprintf(char *out, const char *format, ...)
 {
         va_list args;
-        
+
         va_start( args, format );
         return uprint( &out, format, args );
 }

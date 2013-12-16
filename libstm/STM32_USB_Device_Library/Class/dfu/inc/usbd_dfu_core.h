@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 
@@ -30,16 +30,16 @@
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
-  
+
 /** @defgroup usbd_dfu
   * @brief This file is the Header file for USBD_dfu.c
   * @{
-  */ 
+  */
 
 
 /** @defgroup usbd_dfu_Exported_Defines
   * @{
-  */ 
+  */
 #define USB_DFU_CONFIG_DESC_SIZ       (18 + (9 * USBD_ITF_MAX_NUM))
 #define USB_DFU_DESC_SIZ              9
 
@@ -110,10 +110,10 @@
 /* Other defines                                  */
 /**************************************************/
 /* Bit Detach capable = bit 3 in bmAttributes field */
-#define DFU_DETACH_MASK              (uint8_t)(1 << 4) 
+#define DFU_DETACH_MASK              (uint8_t)(1 << 4)
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
@@ -136,14 +136,14 @@ typedef enum _DFU_REQUESTS {
 typedef  void (*pFunction)(void);
 /**
   * @}
-  */ 
+  */
 
 
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
-  */ 
-/**********  Descriptor of DFU interface 0 Alternate setting n ****************/  
+  */
+/**********  Descriptor of DFU interface 0 Alternate setting n ****************/
 #define USBD_DFU_IF_DESC(n)   0x09,   /* bLength: Interface Descriptor size */ \
                               USB_INTERFACE_DESCRIPTOR_TYPE,   /* bDescriptorType */ \
                               0x00,   /* bInterfaceNumber: Number of Interface */ \
@@ -154,34 +154,34 @@ typedef  void (*pFunction)(void);
                               0x02,   /* nInterfaceProtocol: DFU mode protocol */ \
                               USBD_IDX_INTERFACE_STR + (n) + 1 /* iInterface: Index of string descriptor */ \
                               /* 18 */
-  
+
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBD_CORE_Exported_Variables
   * @{
-  */ 
+  */
 
 extern USBD_Class_cb_TypeDef  DFU_cb;
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
 /**
   * @}
-  */ 
+  */
 
 #endif  // __USB_DFU_CORE_H_
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
-  
+  */
+
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

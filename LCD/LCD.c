@@ -22,7 +22,7 @@
 	(l)->row=((l)->row+(l)->col/20)%4; \
 	(l)->col=(l)->col%20; \
 	LCD_MOVE((l)->LCD, (l)->row, (l)->col); \
-} 
+}
 
 static const int16_t line_addr[]={0x80, 0xc0, 0x94, 0xd4};
 
@@ -60,10 +60,10 @@ LCD_ControllerTypeDef new_LCD_Controller(LCD_InitTypeDef *l){
 void LCD_Init(LCD_InitTypeDef *l){
 	LCD_CMD(l, 0x38);
 	vTaskDelay(5);
-	
+
 	LCD_CMD(l, 0x08);
 	vTaskDelay(5);
-	
+
 	LCD_CMD(l, 0x01);
 	vTaskDelay(5);
 
@@ -82,7 +82,7 @@ void LCD_CMD(LCD_InitTypeDef *lcd, uint16_t cmd){
 	RW_0(lcd);
 
 	/* pulse */
-	make_E_pulse(lcd);        
+	make_E_pulse(lcd);
 
 	lResetDB(lcd, cmd);
 }
@@ -102,8 +102,6 @@ void LCD_DATA(LCD_InitTypeDef *lcd, uint16_t data){
 void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col){
 	LCD_CMD(lcd, line_addr[row]+col);
 }
-
-
 
 void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str){
 	//Jump to
@@ -127,7 +125,6 @@ void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str){
 		boundReset(lcdctl);
 	}
 }
-
 
 int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...){
 	int p=0, vaint;
@@ -169,5 +166,5 @@ char *itoa(int32_t n, uint32_t base){
 
 	buf[i]='-';
 
-	return neg ? &buf[i]: &buf[i+1];	
+	return neg ? &buf[i]: &buf[i+1];
 }

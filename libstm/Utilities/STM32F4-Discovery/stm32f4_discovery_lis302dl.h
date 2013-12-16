@@ -17,8 +17,8 @@
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
+  ******************************************************************************
+  */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __STM32F4_DISCOVERY_LIS302DL_H
@@ -34,20 +34,20 @@
 /** @addtogroup Utilities
   * @{
   */
-  
+
 /** @addtogroup STM32F4_DISCOVERY
   * @{
-  */ 
+  */
 
 /** @addtogroup STM32F4_DISCOVERY_LIS302DL
   * @{
   */
-  
+
 
 /** @defgroup STM32F4_DISCOVERY_LIS302DL_Exported_Types
   * @{
   */
-   
+
 /* LIS302DL struct */
 typedef struct
 {
@@ -63,37 +63,37 @@ typedef struct
 {
   uint8_t HighPassFilter_Data_Selection;      /* Internal filter bypassed or data from internal filter send to output register*/
   uint8_t HighPassFilter_CutOff_Frequency;    /* High pass filter cut-off frequency */
-  uint8_t HighPassFilter_Interrupt;           /* High pass filter enabled for Freefall/WakeUp #1 or #2 */ 
-}LIS302DL_FilterConfigTypeDef;  
+  uint8_t HighPassFilter_Interrupt;           /* High pass filter enabled for Freefall/WakeUp #1 or #2 */
+}LIS302DL_FilterConfigTypeDef;
 
 /* LIS302DL Interrupt struct */
 typedef struct
 {
   uint8_t Latch_Request;                      /* Latch interrupt request into CLICK_SRC register*/
   uint8_t SingleClick_Axes;                   /* Single Click Axes Interrupts */
-  uint8_t DoubleClick_Axes;                   /* Double Click Axes Interrupts */ 
-}LIS302DL_InterruptConfigTypeDef;  
+  uint8_t DoubleClick_Axes;                   /* Double Click Axes Interrupts */
+}LIS302DL_InterruptConfigTypeDef;
 
 /**
   * @}
   */
-  
+
 /** @defgroup STM32F4_DISCOVERY_LIS302DL_Exported_Constants
   * @{
   */
 
-/* Uncomment the following line to use the default LIS302DL_TIMEOUT_UserCallback() 
+/* Uncomment the following line to use the default LIS302DL_TIMEOUT_UserCallback()
    function implemented in stm32f4_discovery_lis302dl.c file.
-   LIS302DL_TIMEOUT_UserCallback() function is called whenever a timeout condition 
+   LIS302DL_TIMEOUT_UserCallback() function is called whenever a timeout condition
    occure during communication (waiting transmit data register empty flag(TXE)
-   or waiting receive data register is not empty flag (RXNE)). */   
+   or waiting receive data register is not empty flag (RXNE)). */
 /* #define USE_DEFAULT_TIMEOUT_CALLBACK */
 
 /* Maximum Timeout values for flags waiting loops. These timeouts are not based
    on accurate values, they just guarantee that the application will not remain
    stuck if the SPI communication is corrupted.
    You may modify these timeout values depending on CPU frequency and application
-   conditions (interrupts routines ...). */   
+   conditions (interrupts routines ...). */
 #define LIS302DL_FLAG_TIMEOUT         ((uint32_t)0x1000)
 
 /**
@@ -130,7 +130,7 @@ typedef struct
 #define LIS302DL_SPI_INT1_EXTI_LINE        EXTI_Line0
 #define LIS302DL_SPI_INT1_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
 #define LIS302DL_SPI_INT1_EXTI_PIN_SOURCE  EXTI_PinSource0
-#define LIS302DL_SPI_INT1_EXTI_IRQn        EXTI0_IRQn 
+#define LIS302DL_SPI_INT1_EXTI_IRQn        EXTI0_IRQn
 
 #define LIS302DL_SPI_INT2_PIN              GPIO_Pin_1                  /* PE.01 */
 #define LIS302DL_SPI_INT2_GPIO_PORT        GPIOE                       /* GPIOE */
@@ -138,7 +138,7 @@ typedef struct
 #define LIS302DL_SPI_INT2_EXTI_LINE        EXTI_Line1
 #define LIS302DL_SPI_INT2_EXTI_PORT_SOURCE EXTI_PortSourceGPIOE
 #define LIS302DL_SPI_INT2_EXTI_PIN_SOURCE  EXTI_PinSource1
-#define LIS302DL_SPI_INT2_EXTI_IRQn        EXTI1_IRQn 
+#define LIS302DL_SPI_INT2_EXTI_IRQn        EXTI1_IRQn
 
 
 /******************************************************************************/
@@ -187,11 +187,11 @@ typedef struct
 *  CTRL_REG2 Regsiter: Control Register 2
 *  Read Write register
 *  Default value: 0x00
-*  7 SIM: SPI Serial Interface Mode Selection. 
+*  7 SIM: SPI Serial Interface Mode Selection.
 *         0 - 4 wire interface
 *         1 - 3 wire interface
 *  6 BOOT: Reboot memory content
-*          0 - normal mode 
+*          0 - normal mode
 *          1 - reboot memory content
 *  5 Reserved
 *  4 FDS: Filtered data selection.
@@ -245,7 +245,7 @@ typedef struct
 #define LIS302DL_CTRL_REG3_ADDR              0x22
 
 /*******************************************************************************
-*  HP_FILTER_RESET Register: Dummy register. Reading at this address zeroes 
+*  HP_FILTER_RESET Register: Dummy register. Reading at this address zeroes
 *  instantaneously the content of the internal high pass filter. If the high pass
 *  filter is enabled all three axes are instantaneously set to 0g.
 *  This allows to overcome the settling time of the high pass filter.
@@ -261,7 +261,7 @@ typedef struct
 *           0: no overrun has occurred
 *           1: new data has overwritten the previous one before it was read
 *  6 ZOR: Z axis data overrun.
-*         0: no overrun has occurred 
+*         0: no overrun has occurred
 *         1: new data for Z-axis has overwritten the previous one before it was read
 *  5 yOR: y axis data overrun.
 *         0: no overrun has occurred
@@ -312,9 +312,9 @@ typedef struct
 *  FF_WW_CFG_1 Register: Configuration register for Interrupt 1 source.
 *  Read write register
 *  Default value: 0x00
-*  7 AOI: AND/OR combination of Interrupt events. 
+*  7 AOI: AND/OR combination of Interrupt events.
 *         0: OR combination of interrupt events
-*         1: AND combination of interrupt events 
+*         1: AND combination of interrupt events
 *  6 LIR: Latch/not latch interrupt request
 *         0: interrupt request not latched
 *         1: interrupt request latched
@@ -327,7 +327,7 @@ typedef struct
 *  3 YHIE: Enable interrupt generation on Y high event.
 *          0: disable interrupt request
 *          1: enable interrupt request on measured accel. value higher than preset threshold
-*  2 YLIE: Enable interrupt generation on Y low event. 
+*  2 YLIE: Enable interrupt generation on Y low event.
 *          0: disable interrupt request
 *          1: enable interrupt request on measured accel. value lower than preset threshold
 *  1 XHIE: Enable interrupt generation on X high event.
@@ -350,21 +350,21 @@ typedef struct
 *  6 IA: Interrupt active.
 *        0: no interrupt has been generated
 *        1: one or more interrupts have been generated
-*  5 ZH: Z high. 
+*  5 ZH: Z high.
 *        0: no interrupt
-*        1: ZH event has occurred 
+*        1: ZH event has occurred
 *  4 ZL: Z low.
 *        0: no interrupt
 *        1: ZL event has occurred
 *  3 YH: Y high.
 *        0: no interrupt
-*        1: YH event has occurred 
+*        1: YH event has occurred
 *  2 YL: Y low.
 *        0: no interrupt
 *        1: YL event has occurred
 *  1 YH: X high.
 *        0: no interrupt
-*        1: XH event has occurred 
+*        1: XH event has occurred
 *  0 YL: X low.
 *        0: no interrupt
 *        1: XL event has occurred
@@ -394,9 +394,9 @@ typedef struct
 *  FF_WW_CFG_2 Register: Configuration register for Interrupt 2 source.
 *  Read write register
 *  Default value: 0x00
-*  7 AOI: AND/OR combination of Interrupt events. 
+*  7 AOI: AND/OR combination of Interrupt events.
 *         0: OR combination of interrupt events
-*         1: AND combination of interrupt events 
+*         1: AND combination of interrupt events
 *  6 LIR: Latch/not latch interrupt request
 *         0: interrupt request not latched
 *         1: interrupt request latched
@@ -409,7 +409,7 @@ typedef struct
 *  3 YHIE: Enable interrupt generation on Y high event.
 *          0: disable interrupt request
 *          1: enable interrupt request on measured accel. value higher than preset threshold
-*  2 YLIE: Enable interrupt generation on Y low event. 
+*  2 YLIE: Enable interrupt generation on Y low event.
 *          0: disable interrupt request
 *          1: enable interrupt request on measured accel. value lower than preset threshold
 *  1 XHIE: Enable interrupt generation on X high event.
@@ -432,21 +432,21 @@ typedef struct
 *  6 IA: Interrupt active.
 *        0: no interrupt has been generated
 *        1: one or more interrupts have been generated
-*  5 ZH: Z high. 
+*  5 ZH: Z high.
 *        0: no interrupt
-*        1: ZH event has occurred 
+*        1: ZH event has occurred
 *  4 ZL: Z low.
 *        0: no interrupt
 *        1: ZL event has occurred
 *  3 YH: Y high.
 *        0: no interrupt
-*        1: YH event has occurred 
+*        1: YH event has occurred
 *  2 YL: Y low.
 *        0: no interrupt
 *        1: YL event has occurred
 *  1 YH: X high.
 *        0: no interrupt
-*        1: XH event has occurred 
+*        1: XH event has occurred
 *  0 YL: X low.
 *        0: no interrupt
 *        1: XL event has occurred
@@ -511,22 +511,22 @@ typedef struct
 *        1: one or more interrupts have been generated
 *  5 Double_Z: Double click on Z axis event.
 *        0: no interrupt
-*        1: Double Z event has occurred 
+*        1: Double Z event has occurred
 *  4 Single_Z: Z low.
 *        0: no interrupt
-*        1: Single Z event has occurred 
+*        1: Single Z event has occurred
 *  3 Double_Y: Y high.
 *        0: no interrupt
-*        1: Double Y event has occurred 
+*        1: Double Y event has occurred
 *  2 Single_Y: Y low.
 *        0: no interrupt
-*        1: Single Y event has occurred 
+*        1: Single Y event has occurred
 *  1 Double_X: X high.
 *        0: no interrupt
-*        1: Double X event has occurred 
+*        1: Double X event has occurred
 *  0 Single_X: X low.
 *        0: no interrupt
-*        1: Single X event has occurred 
+*        1: Single X event has occurred
 *******************************************************************************/
 #define LIS302DL_CLICK_SRC_REG_ADDR        0x39
 
@@ -579,7 +579,7 @@ typedef struct
 #define LIS302DL_SENSITIVITY_2_3G                         18  /* 18 mg/digit*/
 #define LIS302DL_SENSITIVITY_9_2G                         72  /* 72 mg/digit*/
 
-/** @defgroup Data_Rate_selection                 
+/** @defgroup Data_Rate_selection
   * @{
   */
 #define LIS302DL_DATARATE_100                             ((uint8_t)0x00)
@@ -587,8 +587,8 @@ typedef struct
 /**
   * @}
   */
-  
-/** @defgroup Power_Mode_selection 
+
+/** @defgroup Power_Mode_selection
   * @{
   */
 #define LIS302DL_LOWPOWERMODE_POWERDOWN                   ((uint8_t)0x00)
@@ -596,8 +596,8 @@ typedef struct
 /**
   * @}
   */
-  
-/** @defgroup Full_Scale_selection 
+
+/** @defgroup Full_Scale_selection
   * @{
   */
 #define LIS302DL_FULLSCALE_2_3                            ((uint8_t)0x00)
@@ -605,8 +605,8 @@ typedef struct
 /**
   * @}
   */
-  
-/** @defgroup Self_Test_selection 
+
+/** @defgroup Self_Test_selection
   * @{
   */
 #define LIS302DL_SELFTEST_NORMAL                          ((uint8_t)0x00)
@@ -614,9 +614,9 @@ typedef struct
 #define LIS302DL_SELFTEST_M                               ((uint8_t)0x08)
 /**
   * @}
-  */  
+  */
 
-/** @defgroup Direction_XYZ_selection 
+/** @defgroup Direction_XYZ_selection
   * @{
   */
 #define LIS302DL_X_ENABLE                                 ((uint8_t)0x01)
@@ -626,46 +626,46 @@ typedef struct
 /**
   * @}
   */
- 
- /** @defgroup SPI_Serial_Interface_Mode_selection 
+
+ /** @defgroup SPI_Serial_Interface_Mode_selection
   * @{
   */
 #define LIS302DL_SERIALINTERFACE_4WIRE                    ((uint8_t)0x00)
 #define LIS302DL_SERIALINTERFACE_3WIRE                    ((uint8_t)0x80)
 /**
   * @}
-  */ 
+  */
 
- /** @defgroup Boot_Mode_selection 
+ /** @defgroup Boot_Mode_selection
   * @{
   */
 #define LIS302DL_BOOT_NORMALMODE                          ((uint8_t)0x00)
 #define LIS302DL_BOOT_REBOOTMEMORY                        ((uint8_t)0x40)
 /**
   * @}
-  */   
+  */
 
- /** @defgroup Filtered_Data_Selection_Mode_selection 
+ /** @defgroup Filtered_Data_Selection_Mode_selection
   * @{
   */
 #define LIS302DL_FILTEREDDATASELECTION_BYPASSED           ((uint8_t)0x00)
 #define LIS302DL_FILTEREDDATASELECTION_OUTPUTREGISTER     ((uint8_t)0x20)
 /**
   * @}
-  */ 
-  
- /** @defgroup High_Pass_Filter_Interrupt_selection 
+  */
+
+ /** @defgroup High_Pass_Filter_Interrupt_selection
   * @{
-  */  
+  */
 #define LIS302DL_HIGHPASSFILTERINTERRUPT_OFF              ((uint8_t)0x00)
 #define LIS302DL_HIGHPASSFILTERINTERRUPT_1                ((uint8_t)0x04)
 #define LIS302DL_HIGHPASSFILTERINTERRUPT_2                ((uint8_t)0x08)
 #define LIS302DL_HIGHPASSFILTERINTERRUPT_1_2              ((uint8_t)0x0C)
 /**
   * @}
-  */ 
-  
- /** @defgroup High_Pass_Filter_selection 
+  */
+
+ /** @defgroup High_Pass_Filter_selection
   * @{
   */
 #define LIS302DL_HIGHPASSFILTER_LEVEL_0                   ((uint8_t)0x00)
@@ -677,7 +677,7 @@ typedef struct
   */
 
 
-/** @defgroup latch_Interrupt_Request_selection 
+/** @defgroup latch_Interrupt_Request_selection
   * @{
   */
 #define LIS302DL_INTERRUPTREQUEST_NOTLATCHED              ((uint8_t)0x00)
@@ -686,7 +686,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Click_Interrupt_XYZ_selection 
+/** @defgroup Click_Interrupt_XYZ_selection
   * @{
   */
 #define LIS302DL_CLICKINTERRUPT_XYZ_DISABLE               ((uint8_t)0x00)
@@ -698,7 +698,7 @@ typedef struct
   * @}
   */
 
-/** @defgroup Double_Click_Interrupt_XYZ_selection 
+/** @defgroup Double_Click_Interrupt_XYZ_selection
   * @{
   */
 #define LIS302DL_DOUBLECLICKINTERRUPT_XYZ_DISABLE         ((uint8_t)0x00)
@@ -711,8 +711,8 @@ typedef struct
   */
 /**
   * @}
-  */ 
-  
+  */
+
 /** @defgroup STM32F4_DISCOVERY_LIS302DL_Exported_Macros
   * @{
   */
@@ -720,11 +720,11 @@ typedef struct
 #define LIS302DL_CS_HIGH()      GPIO_SetBits(LIS302DL_SPI_CS_GPIO_PORT, LIS302DL_SPI_CS_PIN)
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup STM32F4_DISCOVERY_LIS302DL_Exported_Functions
   * @{
-  */ 
+  */
 void LIS302DL_Init(LIS302DL_InitTypeDef *LIS302DL_InitStruct);
 void LIS302DL_InterruptConfig(LIS302DL_InterruptConfigTypeDef *LIS302DL_InterruptConfigStruct);
 void LIS302DL_FilterConfig(LIS302DL_FilterConfigTypeDef *LIS302DL_FilterConfigStruct);
@@ -737,11 +737,11 @@ void LIS302DL_Write(uint8_t* pBuffer, uint8_t WriteAddr, uint16_t NumByteToWrite
 void LIS302DL_Read(uint8_t* pBuffer, uint8_t ReadAddr, uint16_t NumByteToRead);
 
 /* USER Callbacks: This is function for which prototype only is declared in
-   MEMS accelerometre driver and that should be implemented into user applicaiton. */  
-/* LIS302DL_TIMEOUT_UserCallback() function is called whenever a timeout condition 
+   MEMS accelerometre driver and that should be implemented into user applicaiton. */
+/* LIS302DL_TIMEOUT_UserCallback() function is called whenever a timeout condition
    occure during communication (waiting transmit data register empty flag(TXE)
    or waiting receive data register is not empty flag (RXNE)).
-   You can use the default timeout callback implementation by uncommenting the 
+   You can use the default timeout callback implementation by uncommenting the
    define USE_DEFAULT_TIMEOUT_CALLBACK in stm32f4_discovery_lis302dl.h file.
    Typically the user implementation of this callback should reset MEMS peripheral
    and re-initialize communication or in worst case reset all the application. */
@@ -766,7 +766,7 @@ uint32_t LIS302DL_TIMEOUT_UserCallback(void);
 
 /**
   * @}
-  */ 
+  */
 
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

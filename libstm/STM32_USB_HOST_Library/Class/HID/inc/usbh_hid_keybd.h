@@ -38,25 +38,25 @@
 /** @addtogroup USBH_HID_CLASS
   * @{
   */
-  
+
 /** @defgroup USBH_HID_KEYBD
   * @brief This file is the Header file for USBH_HID_KEYBD.c
   * @{
-  */ 
+  */
 
 
 /** @defgroup USBH_HID_KEYBD_Exported_Types
   * @{
-  */ 
+  */
 
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HID_KEYBD_Exported_Defines
   * @{
-  */ 
+  */
 //#define QWERTY_KEYBOARD
 #define AZERTY_KEYBOARD
 
@@ -73,50 +73,50 @@
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HID_KEYBD_Exported_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HID_KEYBD_Exported_Variables
   * @{
-  */ 
+  */
 
 extern HID_cb_TypeDef HID_KEYBRD_cb;
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBH_HID_KEYBD_Exported_FunctionsPrototype
   * @{
-  */ 
+  */
 void  USR_KEYBRD_Init (void);
 void  USR_KEYBRD_ProcessData (uint8_t pbuf);
 /**
   * @}
-  */ 
+  */
 
 #endif /* __USBH_HID_KEYBD_H */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/
 

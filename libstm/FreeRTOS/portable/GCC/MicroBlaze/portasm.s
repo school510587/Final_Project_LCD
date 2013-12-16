@@ -40,7 +40,7 @@
     FreeRTOS WEB site.
 
     1 tab == 4 spaces!
-    
+
     ***************************************************************************
      *                                                                       *
      *    Having a problem?  Start by reading the FAQ "My application does   *
@@ -50,17 +50,17 @@
      *                                                                       *
     ***************************************************************************
 
-    
-    http://www.FreeRTOS.org - Documentation, training, latest information, 
+
+    http://www.FreeRTOS.org - Documentation, training, latest information,
     license and contact details.
-    
+
     http://www.FreeRTOS.org/plus - A selection of FreeRTOS ecosystem products,
     including FreeRTOS+Trace - an indispensable productivity tool.
 
-    Real Time Engineers ltd license FreeRTOS to High Integrity Systems, who sell 
-    the code with commercial support, indemnification, and middleware, under 
+    Real Time Engineers ltd license FreeRTOS to High Integrity Systems, who sell
+    the code with commercial support, indemnification, and middleware, under
     the OpenRTOS brand: http://www.OpenRTOS.com.  High Integrity Systems also
-    provide a safety engineered and independently SIL3 certified version under 
+    provide a safety engineered and independently SIL3 certified version under
     the SafeRTOS brand: http://www.SafeRTOS.com.
 */
 	.extern pxCurrentTCB
@@ -116,38 +116,38 @@
 	/* Save the top of stack value to the TCB. */
 	lwi r3, r0, pxCurrentTCB
 	sw	r1, r0, r3
-	
+
 	.endm
 
 .macro portRESTORE_CONTEXT
 	/* Load the top of stack value from the TCB. */
 	lwi r3, r0, pxCurrentTCB
-	lw	r1, r0, r3	
+	lw	r1, r0, r3
 	/* Restore the general registers. */
-	lwi r31, r1, 4		
-	lwi r30, r1, 12		
-	lwi r29, r1, 16	
-	lwi r28, r1, 20	
-	lwi r27, r1, 24	
-	lwi r26, r1, 28	
-	lwi r25, r1, 32	
-	lwi r24, r1, 36	
-	lwi r23, r1, 40	
-	lwi r22, r1, 44	
-	lwi r21, r1, 48	
-	lwi r20, r1, 52	
-	lwi r19, r1, 56	
-	lwi r18, r1, 60	
-	lwi r17, r1, 64	
-	lwi r16, r1, 68	
-	lwi r15, r1, 72	
-	lwi r14, r1, 76	
-	lwi r13, r1, 80	
-	lwi r12, r1, 84	
-	lwi r11, r1, 88	
-	lwi r10, r1, 92	
-	lwi r9, r1, 96	
-	lwi r8, r1, 100	
+	lwi r31, r1, 4
+	lwi r30, r1, 12
+	lwi r29, r1, 16
+	lwi r28, r1, 20
+	lwi r27, r1, 24
+	lwi r26, r1, 28
+	lwi r25, r1, 32
+	lwi r24, r1, 36
+	lwi r23, r1, 40
+	lwi r22, r1, 44
+	lwi r21, r1, 48
+	lwi r20, r1, 52
+	lwi r19, r1, 56
+	lwi r18, r1, 60
+	lwi r17, r1, 64
+	lwi r16, r1, 68
+	lwi r15, r1, 72
+	lwi r14, r1, 76
+	lwi r13, r1, 80
+	lwi r12, r1, 84
+	lwi r11, r1, 88
+	lwi r10, r1, 92
+	lwi r9, r1, 96
+	lwi r8, r1, 100
 	lwi r7, r1, 104
 	lwi r6, r1, 108
 	lwi r5, r1, 112
@@ -161,7 +161,7 @@
 	/* Obtain the MSR value from the stack. */
 	lwi r3, r1, 8
 
-	/* Are interrupts enabled in the MSR?  If so return using an return from 
+	/* Are interrupts enabled in the MSR?  If so return using an return from
 	interrupt instruction to ensure interrupts are enabled only once the task
 	is running again. */
 	andi r3, r3, 2
@@ -228,8 +228,8 @@ VPortYieldASM:
 
 vStartFirstTask:
 	portRESTORE_CONTEXT
-	
-	
+
+
 
 
 

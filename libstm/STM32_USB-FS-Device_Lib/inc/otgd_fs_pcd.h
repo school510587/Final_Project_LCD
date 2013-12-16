@@ -3,7 +3,7 @@
 * Author             : MCD Application Team
 * Version            : V3.3.0
 * Date               : 21-March-2011
-* Description        : Header file of the High Layer device mode interface and 
+* Description        : Header file of the High Layer device mode interface and
 *                      wrapping layer
 ********************************************************************************
 * THE PRESENT SOFTWARE WHICH IS FOR GUIDANCE ONLY AIMS AT PROVIDING CUSTOMERS
@@ -71,11 +71,11 @@ void        PCD_DevDisconnect (void);
 void        PCD_EP_SetAddress (uint8_t address);
 uint32_t    PCD_EP_Open(EP_DESCRIPTOR *epdesc);
 uint32_t    PCD_EP_Close  ( uint8_t  ep_addr);
-uint32_t    PCD_EP_Read  ( uint8_t  ep_addr, 
-                           uint8_t  *pbuf, 
+uint32_t    PCD_EP_Read  ( uint8_t  ep_addr,
+                           uint8_t  *pbuf,
                            uint32_t   buf_len);
-uint32_t    PCD_EP_Write ( uint8_t  ep_addr, 
-                           uint8_t  *pbuf, 
+uint32_t    PCD_EP_Write ( uint8_t  ep_addr,
+                           uint8_t  *pbuf,
                            uint32_t   buf_len);
 uint32_t    PCD_EP_Stall (uint8_t   epnum);
 uint32_t    PCD_EP_ClrStall (uint8_t epnum);

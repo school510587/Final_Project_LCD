@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 
@@ -34,19 +34,19 @@
 /** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
   * @{
   */
-  
+
 /** @defgroup usbd_audio
   * @brief This file is the Header file for USBD_audio.c
   * @{
-  */ 
+  */
 
 
 /** @defgroup usbd_audio_Exported_Defines
   * @{
-  */ 
+  */
 
 /* AudioFreq * DataSize (2 bytes) * NumChannels (Stereo: 2) */
-#define AUDIO_OUT_PACKET                              (uint32_t)(((USBD_AUDIO_FREQ * 2 * 2) /1000)) 
+#define AUDIO_OUT_PACKET                              (uint32_t)(((USBD_AUDIO_FREQ * 2 * 2) /1000))
 
 /* Number of sub-packets in the audio transfer buffer. You can modify this value but always make sure
   that it is an even number and higher than 3 */
@@ -97,7 +97,7 @@
 
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup USBD_CORE_Exported_TypesDefinitions
@@ -115,44 +115,44 @@ typedef struct _Audio_Fops
 }AUDIO_FOPS_TypeDef;
 /**
   * @}
-  */ 
+  */
 
 
 
 /** @defgroup USBD_CORE_Exported_Macros
   * @{
-  */ 
+  */
 #define AUDIO_PACKET_SZE(frq)          (uint8_t)(((frq * 2 * 2)/1000) & 0xFF), \
                                        (uint8_t)((((frq * 2 * 2)/1000) >> 8) & 0xFF)
 #define SAMPLE_FREQ(frq)               (uint8_t)(frq), (uint8_t)((frq >> 8)), (uint8_t)((frq >> 16))
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USBD_CORE_Exported_Variables
   * @{
-  */ 
+  */
 
 extern USBD_Class_cb_TypeDef  AUDIO_cb;
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup USB_CORE_Exported_Functions
   * @{
   */
 /**
   * @}
-  */ 
+  */
 
 #endif  // __USB_AUDIO_CORE_H_
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
-  
+  */
+
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

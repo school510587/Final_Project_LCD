@@ -4,7 +4,7 @@
   * @author  MCD Application Team
   * @version V1.0.0
   * @date    22-July-2011
-  * @brief   Specific media access Layer for a template memory. This file is 
+  * @brief   Specific media access Layer for a template memory. This file is
              provided as template example showing how to implement a new memory
              interface based on pre-defined API.
   ******************************************************************************
@@ -19,7 +19,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_mem_if_template.h"
@@ -51,7 +51,7 @@ DFU_MAL_Prop_TypeDef DFU_Mem_cb =
     10, /* Erase Time in ms */
     10  /* Programming Time in ms */
   };
-  
+
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -61,7 +61,7 @@ DFU_MAL_Prop_TypeDef DFU_Mem_cb =
   * @retval MAL_OK if operation is successeful, MAL_FAIL else.
   */
 uint16_t MEM_If_Init(void)
-{ 
+{
   return MAL_OK;
 }
 
@@ -72,7 +72,7 @@ uint16_t MEM_If_Init(void)
   * @retval MAL_OK if operation is successeful, MAL_FAIL else.
   */
 uint16_t MEM_If_DeInit(void)
-{ 
+{
   return MAL_OK;
 }
 
@@ -109,7 +109,7 @@ uint16_t MEM_If_Write(uint32_t Add, uint32_t Len)
 uint8_t *MEM_If_Read (uint32_t Add, uint32_t Len)
 {
   /* Return a valid address to avoid HardFault */
-  return  (uint8_t*)(MAL_Buffer); 
+  return  (uint8_t*)(MAL_Buffer);
 }
 
 /**

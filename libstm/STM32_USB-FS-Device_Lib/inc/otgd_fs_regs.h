@@ -162,7 +162,7 @@ uint32_t reserved8_31 :
     24;
   }
   b;
-} 
+}
 USB_OTG_GAHBCFG_TypeDef;
 /******************************************************************************/
 
@@ -496,7 +496,7 @@ uint32_t sgoutnak :
 uint32_t cgoutnak :
     1;
 uint32_t pwronprgdone :
-    1;  
+    1;
 uint32_t reserved :
     20;
   }
@@ -577,11 +577,11 @@ uint32_t setup :   /* for EP0 only */
 uint32_t outtokenepdis :
     1;
 uint32_t reserved5 :
-    1;   
+    1;
 uint32_t b2bsetup :
-    1;      
+    1;
 uint32_t reserved07_31 :
-    25;    
+    25;
   }
   b;
 } USB_OTG_DOEPINTx_TypeDef;
@@ -663,7 +663,7 @@ uint32_t reserved :
     1;
   }
   b;
-} 
+}
 OTG_FS_DEPTSIZx_TypeDef;
 
 /******************************************************************************/

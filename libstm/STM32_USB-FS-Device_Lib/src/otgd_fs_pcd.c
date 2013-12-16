@@ -34,8 +34,8 @@ void PCD_Init(void)
   uint32_t i = 0;
   USB_OTG_EP *ep;
 
-  /**** SOFTWARE INIT *****/ 
-  
+  /**** SOFTWARE INIT *****/
+
   ep = &USB_OTG_PCD_dev.ep0;
 
   /* Init ep structure */
@@ -85,10 +85,10 @@ void PCD_Init(void)
   USB_OTG_PCD_dev.ep0.type = EP_TYPE_CTRL;
 
   /**** HARDWARE INIT *****/
-  
+
   /* Set the OTG_USB base registers address */
   OTGD_FS_SetAddress(USB_OTG_FS_BASE_ADDR);
-  
+
   /* Disable all global interrupts */
   OTGD_FS_DisableGlobalInt();
 
@@ -96,7 +96,7 @@ void PCD_Init(void)
   OTGD_FS_CoreInit();
 
   /* Init Device mode*/
-  OTGD_FS_CoreInitDev();  
+  OTGD_FS_CoreInitDev();
 }
 
 /*******************************************************************************
@@ -225,7 +225,7 @@ uint32_t  PCD_EP_Write (uint8_t ep_addr, uint8_t *pbuf, uint32_t buf_len)
   ep->xfer_len = buf_len;
   ep->is_in = 1;
   ep->num = ep_addr & 0x7F;
-  
+
   if ( ep->num == 0 )
   {
     OTGD_FS_EP0StartXfer(ep);
@@ -334,7 +334,7 @@ void  PCD_EP_SetAddress (uint8_t address)
   USB_OTG_DCFG_TypeDef dcfg;
 
   dcfg.d32 = 0;
-  
+
   dcfg.b.devaddr = address;
   USB_OTG_MODIFY_REG32( &USB_OTG_FS_regs.DEV->DCFG, 0, dcfg.d32);
 }
@@ -388,7 +388,7 @@ void  PCD_DevConnect(void)
 {
 
   USB_OTG_DCTL_TypeDef dctl;
-  
+
   dctl.d32 = 0;
 
   dctl.d32 = USB_OTG_READ_REG32(&USB_OTG_FS_regs.DEV->DCTL);
@@ -412,7 +412,7 @@ void  PCD_DevDisconnect (void)
   USB_OTG_DCTL_TypeDef dctl;
 
   dctl.d32 = 0;
-  
+
   dctl.d32 = USB_OTG_READ_REG32(&USB_OTG_FS_regs.DEV->DCTL);
 
   /* Disconnect device for 20ms */
@@ -433,8 +433,8 @@ void PCD_EP0_OutStart(void)
 
   USB_OTG_DOEPTSIZ0_TypeDef doeptsize0;
   doeptsize0.d32 = 0;
-  
-  
+
+
   doeptsize0.b.supcnt = 3;
   doeptsize0.b.pktcnt = 1;
   doeptsize0.b.xfersize = 8 * 3;

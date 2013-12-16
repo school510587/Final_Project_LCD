@@ -59,7 +59,7 @@ void CTR_LP(void)
 
 	    SaveRState = _GetENDPOINT(ENDP0);
 	    SaveTState = SaveRState & EPTX_STAT;
-	    SaveRState &=  EPRX_STAT;	
+	    SaveRState &=  EPRX_STAT;
 
 	    _SetEPRxTxStatus(ENDP0,EP_RX_NAK,EP_TX_NAK);
 
@@ -89,7 +89,7 @@ void CTR_LP(void)
         /* DIR = 1 & (CTR_TX | CTR_RX) => 2 int pending */
 
         wEPVal = _GetENDPOINT(ENDP0);
-        
+
         if ((wEPVal &EP_SETUP) != 0)
         {
           _ClearEP_CTR_RX(ENDP0); /* SETUP bit kept frozen while CTR_RX = 1 */
@@ -105,7 +105,7 @@ void CTR_LP(void)
           _ClearEP_CTR_RX(ENDP0);
           Out0_Process();
           /* before terminate set Tx & Rx status */
-     
+
 		     _SetEPRxTxStatus(ENDP0,SaveRState,SaveTState);
           return;
         }
@@ -143,7 +143,7 @@ void CTR_LP(void)
 
 /*******************************************************************************
 * Function Name  : CTR_HP.
-* Description    : High Priority Endpoint Correct Transfer interrupt's service 
+* Description    : High Priority Endpoint Correct Transfer interrupt's service
 *                  routine.
 * Input          : None.
 * Output         : None.

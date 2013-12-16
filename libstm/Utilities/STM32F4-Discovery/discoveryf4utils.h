@@ -8,7 +8,7 @@
   * @author  MCD Application Team
   * @version V1.0.0
   * @date    19-September-2011
-  * @brief   This file contains definitions for STM32F4-Discovery Kit's Leds and 
+  * @brief   This file contains definitions for STM32F4-Discovery Kit's Leds and
   *          push-button hardware resources.
   ******************************************************************************
   * @attention
@@ -21,9 +21,9 @@
   * CODING INFORMATION CONTAINED HEREIN IN CONNECTION WITH THEIR PRODUCTS.
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
-  ******************************************************************************  
-  */ 
-  
+  ******************************************************************************
+  */
+
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __DISCOVERYF4UTILS_H
 #define __DISCOVERYF4UTILS_H
@@ -31,7 +31,7 @@
 #ifdef __cplusplus
  extern "C" {
 #endif
-                                              
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_conf.h"
 #include "stm32f4xx.h"
@@ -39,19 +39,19 @@
 /** @addtogroup Utilities
   * @{
   */
-  
+
 /** @addtogroup STM32F4_DISCOVERY
   * @{
   */
-      
+
 /** @addtogroup STM32F4_DISCOVERY_LOW_LEVEL
   * @{
-  */ 
+  */
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Exported_Types
   * @{
   */
-typedef enum 
+typedef enum
 {
   LED_GREEN = 0,
   LED_BLUE = 1,
@@ -59,23 +59,23 @@ typedef enum
   LED_ORANGE = 3
 } Led_TypeDef;
 
-typedef enum 
-{  
+typedef enum
+{
   BUTTON_USER = 0,
 } Button_TypeDef;
 
-typedef enum 
-{  
+typedef enum
+{
   BUTTON_MODE_GPIO = 0,
   BUTTON_MODE_EXTI = 1
-} ButtonMode_TypeDef;     
+} ButtonMode_TypeDef;
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Exported_Constants
   * @{
-  */ 
+  */
 
 /** @addtogroup STM32F4_DISCOVERY_LOW_LEVEL_LED
   * @{
@@ -85,26 +85,26 @@ typedef enum
 #define LED_RED_PIN                         GPIO_Pin_14
 #define LED_RED_GPIO_PORT                   GPIOD
 #define LED_RED_GPIO_CLK                    RCC_AHB1Periph_GPIOD
-  
+
 #define LED_GREEN_PIN                       GPIO_Pin_12
 #define LED_GREEN_GPIO_PORT                 GPIOD
 #define LED_GREEN_GPIO_CLK                  RCC_AHB1Periph_GPIOD
-  
+
 #define LED_BLUE_PIN                        GPIO_Pin_15
 #define LED_BLUE_GPIO_PORT                  GPIOD
 #define LED_BLUE_GPIO_CLK                   RCC_AHB1Periph_GPIOD
-  
+
 #define LED_ORANGE_PIN                      GPIO_Pin_13
 #define LED_ORANGE_GPIO_PORT                GPIOD
 #define LED_ORANGE_GPIO_CLK                 RCC_AHB1Periph_GPIOD
 /**
   * @}
-  */ 
-  
+  */
+
 /** @addtogroup STM32F4_DISCOVERY_LOW_LEVEL_BUTTON
   * @{
-  */  
-#define BUTTONn                          1  
+  */
+#define BUTTONn                          1
 
 /**
  * @brief Wakeup push-button
@@ -115,17 +115,17 @@ typedef enum
 #define USER_BUTTON_EXTI_LINE          EXTI_Line0
 #define USER_BUTTON_EXTI_PORT_SOURCE   EXTI_PortSourceGPIOA
 #define USER_BUTTON_EXTI_PIN_SOURCE    EXTI_PinSource0
-#define USER_BUTTON_EXTI_IRQn          EXTI0_IRQn 
+#define USER_BUTTON_EXTI_IRQn          EXTI0_IRQn
 /**
   * @}
-  */ 
-  
+  */
+
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Exported_Macros
   * @{
-  */  
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Exported_Functions
@@ -194,16 +194,16 @@ void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct);
 #endif /* __DISCOVERYF4UTILS_H */
 /**
   * @}
-  */ 
-
-/**
-  * @}
-  */ 
+  */
 
 /**
   * @}
   */
 
- 
+/**
+  * @}
+  */
+
+
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

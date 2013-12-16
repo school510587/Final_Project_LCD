@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_otp_if.h"
@@ -47,7 +47,7 @@ DFU_MAL_Prop_TypeDef DFU_Otp_cb =
     1,  /* Erase Time in ms */
     10  /* Programming Time in ms */
   };
-  
+
 /* Private functions ---------------------------------------------------------*/
 
 /**
@@ -60,7 +60,7 @@ DFU_MAL_Prop_TypeDef DFU_Otp_cb =
 uint16_t OTP_If_Write(uint32_t Add, uint32_t Len)
 {
   uint32_t idx = 0;
-  
+
   if  (Len & 0x3) /* Not an aligned data */
   {
     for (idx = Len; idx < ((Len & 0xFFFC) + 4); idx++)
@@ -68,7 +68,7 @@ uint16_t OTP_If_Write(uint32_t Add, uint32_t Len)
       MAL_Buffer[idx] = 0xFF;
     }
   }
-  
+
   /* Data received are Word multiple */
   for (idx = 0; idx <  Len; idx = idx + 4)
   {

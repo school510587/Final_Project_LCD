@@ -17,7 +17,7 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
+  */
 
 /* Includes ------------------------------------------------------------------*/
 #include "usbd_audio_core.h"
@@ -31,33 +31,33 @@
   */
 
 
-/** @defgroup usbd_audio_out_if 
+/** @defgroup usbd_audio_out_if
   * @brief usbd out interface module
   * @{
-  */ 
+  */
 
 /** @defgroup usbd_audio_out_if_Private_TypesDefinitions
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup usbd_audio_out_if_Private_Defines
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup usbd_audio_out_if_Private_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup usbd_audio_out_if_Private_FunctionPrototypes
@@ -73,12 +73,12 @@ static uint8_t  GetState     (void);
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup usbd_audio_out_if_Private_Variables
   * @{
-  */ 
-AUDIO_FOPS_TypeDef  AUDIO_OUT_fops = 
+  */
+AUDIO_FOPS_TypeDef  AUDIO_OUT_fops =
 {
   Init,
   DeInit,
@@ -93,26 +93,26 @@ static uint8_t AudioState = AUDIO_STATE_INACTIVE;
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup usbd_audio_out_if_Private_Functions
   * @{
-  */ 
+  */
 
 /**
   * @brief  Init
   *         Initialize and configures all required resources for audio play function.
-  * @param  AudioFreq: Statrtup audio frequency. 
+  * @param  AudioFreq: Statrtup audio frequency.
   * @param  Volume: Startup volume to be set.
   * @param  options: specific options passed to low layer function.
   * @retval AUDIO_OK if all operations succeed, AUDIO_FAIL else.
   */
-static uint8_t  Init         (uint32_t AudioFreq, 
-                              uint32_t Volume, 
+static uint8_t  Init         (uint32_t AudioFreq,
+                              uint32_t Volume,
                               uint32_t options)
 {
   static uint32_t Initialized = 0;
-  
+
   /* Check if the low layer has already been initialized */
   if (Initialized == 0)
   {
@@ -122,14 +122,14 @@ static uint8_t  Init         (uint32_t AudioFreq,
       AudioState = AUDIO_STATE_ERROR;
       return AUDIO_FAIL;
     }
-    
+
     /* Set the Initialization flag to prevent reinitializing the interface again */
     Initialized = 1;
   }
-  
+
   /* Update the Audio state machine */
   AudioState = AUDIO_STATE_ACTIVE;
-    
+
   return AUDIO_OK;
 }
 
@@ -143,20 +143,20 @@ static uint8_t  DeInit       (uint32_t options)
 {
   /* Update the Audio state machine */
   AudioState = AUDIO_STATE_INACTIVE;
-  
+
   return AUDIO_OK;
 }
 
 /**
-  * @brief  AudioCmd 
+  * @brief  AudioCmd
   *         Play, Stop, Pause or Resume current file.
   * @param  pbuf: address from which file shoud be played.
   * @param  size: size of the current buffer/file.
-  * @param  cmd: command to be executed, can be AUDIO_CMD_PLAY , AUDIO_CMD_PAUSE, 
+  * @param  cmd: command to be executed, can be AUDIO_CMD_PLAY , AUDIO_CMD_PAUSE,
   *              AUDIO_CMD_RESUME or AUDIO_CMD_STOP.
   * @retval AUDIO_OK if all operations succeed, AUDIO_FAIL else.
   */
-static uint8_t  AudioCmd(uint8_t* pbuf, 
+static uint8_t  AudioCmd(uint8_t* pbuf,
                          uint32_t size,
                          uint8_t cmd)
 {
@@ -166,7 +166,7 @@ static uint8_t  AudioCmd(uint8_t* pbuf,
     AudioState = AUDIO_STATE_ERROR;
     return AUDIO_FAIL;
   }
-  
+
   switch (cmd)
   {
     /* Process the PLAY command ----------------------------*/
@@ -192,13 +192,13 @@ static uint8_t  AudioCmd(uint8_t* pbuf,
       {
         AudioState = AUDIO_STATE_PLAYING;
         return AUDIO_OK;
-      } 
-    } 
+      }
+    }
     else /* Not allowed command */
     {
       return AUDIO_FAIL;
     }
-    
+
     /* Process the STOP command ----------------------------*/
   case AUDIO_CMD_STOP:
     if (AudioState != AUDIO_STATE_PLAYING)
@@ -216,7 +216,7 @@ static uint8_t  AudioCmd(uint8_t* pbuf,
       AudioState = AUDIO_STATE_STOPPED;
       return AUDIO_OK;
     }
-  
+
     /* Process the PAUSE command ---------------------------*/
   case AUDIO_CMD_PAUSE:
     if (AudioState != AUDIO_STATE_PLAYING)
@@ -233,12 +233,12 @@ static uint8_t  AudioCmd(uint8_t* pbuf,
     {
       AudioState = AUDIO_STATE_PAUSED;
       return AUDIO_OK;
-    } 
-    
+    }
+
     /* Unsupported command ---------------------------------*/
   default:
     return AUDIO_FAIL;
-  }  
+  }
 }
 
 /**
@@ -249,13 +249,13 @@ static uint8_t  AudioCmd(uint8_t* pbuf,
   */
 static uint8_t  VolumeCtl    (uint8_t vol)
 {
-  /* Call low layer volume setting function */  
+  /* Call low layer volume setting function */
   if (EVAL_AUDIO_VolumeCtl(vol) != 0)
   {
     AudioState = AUDIO_STATE_ERROR;
     return AUDIO_FAIL;
   }
-  
+
   return AUDIO_OK;
 }
 
@@ -267,27 +267,27 @@ static uint8_t  VolumeCtl    (uint8_t vol)
   */
 static uint8_t  MuteCtl      (uint8_t cmd)
 {
-  /* Call low layer mute setting function */  
+  /* Call low layer mute setting function */
   if (EVAL_AUDIO_Mute(cmd) != 0)
   {
     AudioState = AUDIO_STATE_ERROR;
     return AUDIO_FAIL;
   }
-  
+
   return AUDIO_OK;
 }
 
 /**
-  * @brief  
-  *         
-  * @param  
-  * @param  
+  * @brief
+  *
+  * @param
+  * @param
   * @retval AUDIO_OK if all operations succeed, AUDIO_FAIL else.
   */
 static uint8_t  PeriodicTC   (uint8_t cmd)
 {
 
-  
+
   return AUDIO_OK;
 }
 
@@ -305,14 +305,14 @@ static uint8_t  GetState   (void)
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /******************* (C) COPYRIGHT 2011 STMicroelectronics *****END OF FILE****/

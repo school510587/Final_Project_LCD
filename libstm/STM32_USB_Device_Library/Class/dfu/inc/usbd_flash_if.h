@@ -35,7 +35,7 @@
  #define FLASH_IF_STRING                 "@Internal Flash   /0x08000000/03*016Ka,01*016Kg,01*064Kg,07*128Kg"
 #elif defined(STM32F10X_CL)
  #define FLASH_END_ADD                   0x08040000
- #define FLASH_IF_STRING                 "@Internal Flash   /0x08000000/06*002Ka,122*002Kg"  
+ #define FLASH_IF_STRING                 "@Internal Flash   /0x08000000/06*002Ka,122*002Kg"
 #endif /* STM32F2XX */
 
 

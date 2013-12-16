@@ -26,7 +26,7 @@
 typedef struct{
 	uint16_t RS_Pin;
 	uint16_t RW_Pin;
-	uint16_t E_Pin;	
+	uint16_t E_Pin;
 
 	/* DB 0 to 7 */
 	uint16_t DB_Pins[8];

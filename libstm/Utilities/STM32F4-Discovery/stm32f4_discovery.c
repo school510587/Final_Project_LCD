@@ -18,8 +18,8 @@
   *
   * <h2><center>&copy; COPYRIGHT 2011 STMicroelectronics</center></h2>
   ******************************************************************************
-  */ 
-  
+  */
+
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_conf.h"
 #include "stm32f4_discovery.h"
@@ -27,45 +27,45 @@
 
 /** @addtogroup Utilities
   * @{
-  */ 
+  */
 
 /** @addtogroup STM32F4_DISCOVERY
   * @{
-  */   
-    
-/** @defgroup STM32F4_DISCOVERY_LOW_LEVEL 
+  */
+
+/** @defgroup STM32F4_DISCOVERY_LOW_LEVEL
   * @brief This file provides set of firmware functions to manage Leds and push-button
   *        available on STM32F4-Discovery Kit from STMicroelectronics.
   * @{
-  */ 
+  */
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_TypesDefinitions
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_Defines
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_Macros
   * @{
-  */ 
+  */
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_Variables
   * @{
-  */ 
+  */
 GPIO_TypeDef* GPIO_PORT[LEDn] = {LED4_GPIO_PORT, LED3_GPIO_PORT, LED5_GPIO_PORT,
                                  LED6_GPIO_PORT};
 const uint16_t GPIO_PIN[LEDn] = {LED4_PIN, LED3_PIN, LED5_PIN,
@@ -73,41 +73,41 @@ const uint16_t GPIO_PIN[LEDn] = {LED4_PIN, LED3_PIN, LED5_PIN,
 const uint32_t GPIO_CLK[LEDn] = {LED4_GPIO_CLK, LED3_GPIO_CLK, LED5_GPIO_CLK,
                                  LED6_GPIO_CLK};
 
-GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {USER_BUTTON_GPIO_PORT }; 
+GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {USER_BUTTON_GPIO_PORT };
 
-const uint16_t BUTTON_PIN[BUTTONn] = {USER_BUTTON_PIN }; 
+const uint16_t BUTTON_PIN[BUTTONn] = {USER_BUTTON_PIN };
 
 const uint32_t BUTTON_CLK[BUTTONn] = {USER_BUTTON_GPIO_CLK };
 
 const uint16_t BUTTON_EXTI_LINE[BUTTONn] = {USER_BUTTON_EXTI_LINE };
 
 const uint8_t BUTTON_PORT_SOURCE[BUTTONn] = {USER_BUTTON_EXTI_PORT_SOURCE};
-								 
-const uint8_t BUTTON_PIN_SOURCE[BUTTONn] = {USER_BUTTON_EXTI_PIN_SOURCE }; 
+
+const uint8_t BUTTON_PIN_SOURCE[BUTTONn] = {USER_BUTTON_EXTI_PIN_SOURCE };
 const uint8_t BUTTON_IRQn[BUTTONn] = {USER_BUTTON_EXTI_IRQn };
 
 NVIC_InitTypeDef   NVIC_InitStructure;
 
 /**
   * @}
-  */ 
+  */
 
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_FunctionPrototypes
   * @{
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /** @defgroup STM32F4_DISCOVERY_LOW_LEVEL_Private_Functions
   * @{
-  */ 
+  */
 
 /**
   * @brief  Configures LED GPIO.
-  * @param  Led: Specifies the Led to be configured. 
+  * @param  Led: Specifies the Led to be configured.
   *   This parameter can be one of following parameters:
   *     @arg LED4
   *     @arg LED3
@@ -118,7 +118,7 @@ NVIC_InitTypeDef   NVIC_InitStructure;
 void STM_EVAL_LEDInit(Led_TypeDef Led)
 {
   GPIO_InitTypeDef  GPIO_InitStructure;
-  
+
   /* Enable the GPIO_LED Clock */
   RCC_AHB1PeriphClockCmd(GPIO_CLK[Led], ENABLE);
 
@@ -133,12 +133,12 @@ void STM_EVAL_LEDInit(Led_TypeDef Led)
 
 /**
   * @brief  Turns selected LED On.
-  * @param  Led: Specifies the Led to be set on. 
+  * @param  Led: Specifies the Led to be set on.
   *   This parameter can be one of following parameters:
   *     @arg LED4
   *     @arg LED3
   *     @arg LED5
-  *     @arg LED6  
+  *     @arg LED6
   * @retval None
   */
 void STM_EVAL_LEDOn(Led_TypeDef Led)
@@ -148,27 +148,27 @@ void STM_EVAL_LEDOn(Led_TypeDef Led)
 
 /**
   * @brief  Turns selected LED Off.
-  * @param  Led: Specifies the Led to be set off. 
+  * @param  Led: Specifies the Led to be set off.
   *   This parameter can be one of following parameters:
   *     @arg LED4
   *     @arg LED3
   *     @arg LED5
-  *     @arg LED6 
+  *     @arg LED6
   * @retval None
   */
 void STM_EVAL_LEDOff(Led_TypeDef Led)
 {
-  GPIO_PORT[Led]->BSRRH = GPIO_PIN[Led];  
+  GPIO_PORT[Led]->BSRRH = GPIO_PIN[Led];
 }
 
 /**
   * @brief  Toggles the selected LED.
-  * @param  Led: Specifies the Led to be toggled. 
+  * @param  Led: Specifies the Led to be toggled.
   *   This parameter can be one of following parameters:
   *     @arg LED4
   *     @arg LED3
   *     @arg LED5
-  *     @arg LED6  
+  *     @arg LED6
   * @retval None
   */
 void STM_EVAL_LEDToggle(Led_TypeDef Led)
@@ -181,10 +181,10 @@ void STM_EVAL_LEDToggle(Led_TypeDef Led)
   * @param  Button: Specifies the Button to be configured.
   *   This parameter should be: BUTTON_USER
   * @param  Button_Mode: Specifies Button mode.
-  *   This parameter can be one of following parameters:   
-  *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO 
+  *   This parameter can be one of following parameters:
+  *     @arg BUTTON_MODE_GPIO: Button will be used as simple IO
   *     @arg BUTTON_MODE_EXTI: Button will be connected to EXTI line with interrupt
-  *                            generation capability  
+  *                            generation capability
   * @retval None
   */
 void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
@@ -211,7 +211,7 @@ void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
     /* Configure Button EXTI line */
     EXTI_InitStructure.EXTI_Line = BUTTON_EXTI_LINE[Button];
     EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
-    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;  
+    EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Rising;
     EXTI_InitStructure.EXTI_LineCmd = ENABLE;
     EXTI_Init(&EXTI_InitStructure);
 
@@ -221,14 +221,14 @@ void STM_EVAL_PBInit(Button_TypeDef Button, ButtonMode_TypeDef Button_Mode)
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 
-    NVIC_Init(&NVIC_InitStructure); 
+    NVIC_Init(&NVIC_InitStructure);
   }
 }
 
 /**
   * @brief  Returns the selected Button state.
   * @param  Button: Specifies the Button to be checked.
-  *   This parameter should be: BUTTON_USER  
+  *   This parameter should be: BUTTON_USER
   * @retval The Button GPIO pin value.
   */
 uint32_t STM_EVAL_PBGetState(Button_TypeDef Button)
@@ -238,19 +238,19 @@ uint32_t STM_EVAL_PBGetState(Button_TypeDef Button)
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */ 
+  */
 
 /**
   * @}
-  */   
+  */
 
 /**
   * @}
-  */ 
+  */
 //=============================================================================
 //=============================================================================
 //				PORTS FROM OLDER EVAL TO DISCOVERY BOARD
@@ -317,7 +317,7 @@ void STM_EVAL_COMInit(COM_TypeDef COM, USART_InitTypeDef* USART_InitStruct)
   //USART_OverSampling8Cmd(COM_USART[COM], ENABLE);
 
   USART_Init(COM_USART[COM], USART_InitStruct);
-    
+
   /* Enable USART */
   USART_Cmd(COM_USART[COM], ENABLE);
 }
