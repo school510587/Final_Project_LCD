@@ -1,25 +1,54 @@
 #ifndef LCDCONFIG_H
 #define LCDCONFIG_H
 
+#include <stdint.h>
+#include "main.h"
+/*
+	LCD Library for STM32Fx
+*/
+
 #define LCD_GPIO GPIOE
 /* high=data mode Low=command mode */
-#define LCD_RS_Pin GPIO_Pin_3
+#define LCD_RS_Pin GPIO_Pin_11
 /* high=read low=write */
-#define LCD_RW_Pin GPIO_Pin_4
-#define LCD_E_Pin GPIO_Pin_9
+#define LCD_RW_Pin GPIO_Pin_12
+#define LCD_E_Pin GPIO_Pin_13
 
-#define LCD_DB4 GPIO_Pin_8
-#define LCD_DB5 GPIO_Pin_7
-#define LCD_DB6 GPIO_Pin_6
-#define LCD_DB7 GPIO_Pin_5
+#define LCD_DB0 GPIO_Pin_3
+#define LCD_DB1 GPIO_Pin_4
+#define LCD_DB2 GPIO_Pin_5
+#define LCD_DB3 GPIO_Pin_6
+#define LCD_DB4 GPIO_Pin_7
+#define LCD_DB5 GPIO_Pin_8
+#define LCD_DB6 GPIO_Pin_9
+#define LCD_DB7 GPIO_Pin_10
+
+typedef struct{
+	uint16_t RS_Pin;
+	uint16_t RW_Pin;
+	uint16_t E_Pin;	
+
+	/* DB 0 to 7 */
+	uint16_t DB_Pins[8];
+	GPIO_TypeDef *GPIO;
+} LCD_InitTypeDef;
+
+struct LCD_Controller;
+
+typedef struct LCD_Controller LCD_ControllerTypeDef;
+
+struct LCD_Controller{
+	/* Which LCD used */
+	LCD_InitTypeDef *LCD;
+	uint8_t col, row;
+
+	int32_t (*lprintf)(LCD_ControllerTypeDef *, const char *, ...);
+};
 
 
-/* LCD Mode Reference
-* READ_STATUS RS=L R/W=H E=H
-* WRITE_CMD RS=L R/W=L D0~D7=cmd E=high
-* READ_DATA
-* WRITE_DATA
-*/
+LCD_ControllerTypeDef new_LCD_Controller(LCD_InitTypeDef *);
+void LCD_Init(LCD_InitTypeDef *);
+void lwrite(LCD_ControllerTypeDef *, const char *);
 
 /* commands */
 enum LCD_CMD{
