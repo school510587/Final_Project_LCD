@@ -90,9 +90,9 @@ int main(void)
 void GPIO_Output_Config(void){
 	GPIO_InitTypeDef GPIO_InitStructure;
 
-	GPIO_PinAFConfig(GPIOE, GPIO_PinSource3|GPIO_PinSource4|GPIO_PinSource5|GPIO_PinSource6|GPIO_PinSource7|GPIO_PinSource8|GPIO_PinSource9|GPIO_PinSource10, GPIO_AF_TIM3);
+	GPIO_PinAFConfig(GPIOE, GPIO_PinSource3|GPIO_PinSource4|GPIO_PinSource5|GPIO_PinSource6|GPIO_PinSource7|GPIO_PinSource8|GPIO_PinSource9|GPIO_PinSource10|GPIO_PinSource11|GPIO_PinSource12|GPIO_PinSource13, GPIO_AF_TIM3);
 
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3|GPIO_Pin_4|GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_7|GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;            // Alt Function - Push Pull
 	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
@@ -100,17 +100,24 @@ void GPIO_Output_Config(void){
 	GPIO_Init( GPIOE, &GPIO_InitStructure );
 }
 
-
 static void LCD_task(void *pvParameters)
 {
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
 	GPIO_Output_Config();
+	GPIO_ResetBits(GPIOE, LCD_RS_Pin);
+	GPIO_ResetBits(GPIOE, LCD_RW_Pin);	
+	GPIO_ResetBits(GPIOE, LCD_E_Pin);
+
+	LCD_InitTypeDef lcd={.GPIO=GPIOE, .RS_Pin=GPIO_Pin_11, .RW_Pin=GPIO_Pin_12, .E_Pin=GPIO_Pin_13, .DB_Pins={GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10}};
+	
+
+	LCD_Init(&lcd);
+	LCD_ControllerTypeDef lcdctl=new_LCD_Controller(&lcd);
+
+	vTaskDelay(5);
+	lcdctl.lprintf(&lcdctl, "LCD Library %d", 123);
 	while (1)
 	{
-		if(UserButtonPressed)
-			GPIO_SetBits(GPIOE, GPIO_Pin_10);
-		else
-			GPIO_ResetBits(GPIOE, GPIO_Pin_10);
 		/* Toggle LED4 */
 		STM_EVAL_LEDOn(LED4);
 		vTaskDelay(100);
