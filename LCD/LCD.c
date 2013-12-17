@@ -33,7 +33,7 @@ void LCD_DATA(LCD_InitTypeDef *, uint16_t);
 void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col);
 int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...);
 
-void lSetDB(LCD_InitTypeDef *lcd, uint16_t number)
+static void lSetDB(const LCD_InitTypeDef *lcd, uint16_t number)
 {
 	uint16_t sum = 0;
 	register int i;
@@ -44,7 +44,7 @@ void lSetDB(LCD_InitTypeDef *lcd, uint16_t number)
 	GPIO_SetBits(lcd->GPIO, sum);
 }
 
-void lResetDB(LCD_InitTypeDef *lcd, uint16_t number)
+static void lResetDB(const LCD_InitTypeDef *lcd, uint16_t number)
 {
 	uint16_t sum = 0;
 	register int i;
