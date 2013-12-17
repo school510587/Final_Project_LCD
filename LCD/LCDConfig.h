@@ -23,7 +23,7 @@
 #define LCD_DB6 GPIO_Pin_9
 #define LCD_DB7 GPIO_Pin_10
 
-typedef struct{
+typedef struct {
 	uint16_t RS_Pin;
 	uint16_t RW_Pin;
 	uint16_t E_Pin;
@@ -51,7 +51,7 @@ void LCD_Init(LCD_InitTypeDef *);
 void lwrite(LCD_ControllerTypeDef *, const char *);
 
 /* commands */
-enum LCD_CMD{
+enum LCD_CMD {
 	LCD_CLEARDISPLAY	=0x01,
 	LCD_RETURNHOME		=0x02,
 	LCD_ENTRYMODESET	=0x04,
@@ -63,7 +63,7 @@ enum LCD_CMD{
 };
 
 /* flags for display entry mode */
-enum LCD_ENTRY_FLAGS{
+enum LCD_ENTRY_FLAGS {
 	LCD_ENTRYRIGHT		=0x00,
 	LCD_ENTRYLEFT		=0x02,
 	LCD_ENTRYSHIFTINCREMENT	=0x01,
@@ -71,7 +71,7 @@ enum LCD_ENTRY_FLAGS{
 };
 
 /* flags for display on/off control */
-enum LCD_DISPLAY{
+enum LCD_DISPLAY {
 	LCD_DISPLAYON		=0x04,
 	LCD_DISPLAYOFF		=0x00,
 	LCD_CURSORON		=0x02,
@@ -81,7 +81,7 @@ enum LCD_DISPLAY{
 };
 
 /* flags for display/cursor shift */
-enum LCD_MOVE{
+enum LCD_MOVE {
 	LCD_DISPLAYMOVE		=0x08,
 	LCD_CURSORMOVE		=0x00,
 	LCD_MOVERIGHT		=0x04,
@@ -89,7 +89,7 @@ enum LCD_MOVE{
 };
 
 /* flags for function set */
-enum LCD_FUNSET{
+enum LCD_FUNSET {
 	LCD_8BITMODE		=0x10,
 	LCD_4BITMODE		=0x00,
 	LCD_2LINE		=0x08,

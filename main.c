@@ -107,15 +107,14 @@ static void LCD_task(void *pvParameters)
 	GPIO_ResetBits(GPIOE, LCD_RW_Pin);
 	GPIO_ResetBits(GPIOE, LCD_E_Pin);
 
-	LCD_InitTypeDef lcd={.GPIO=GPIOE, .RS_Pin=GPIO_Pin_11, .RW_Pin=GPIO_Pin_12, .E_Pin=GPIO_Pin_13, .DB_Pins={GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10}};
+	LCD_InitTypeDef lcd = {.GPIO = GPIOE, .RS_Pin = GPIO_Pin_11, .RW_Pin = GPIO_Pin_12, .E_Pin = GPIO_Pin_13, .DB_Pins = {GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10}};
 
 	LCD_Init(&lcd);
-	LCD_ControllerTypeDef lcdctl=new_LCD_Controller(&lcd);
+	LCD_ControllerTypeDef lcdctl = new_LCD_Controller(&lcd);
 
 	vTaskDelay(5);
 	lcdctl.lprintf(&lcdctl, "LCD Library %d", 123);
-	while (1)
-	{
+	while (1) {
 		/* Toggle LED4 */
 		STM_EVAL_LEDOn(LED4);
 		vTaskDelay(100);
