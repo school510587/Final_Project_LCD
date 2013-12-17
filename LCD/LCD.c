@@ -6,17 +6,6 @@
 #include <stdarg.h>
 
 #define iabs(a) ((a)<0?(-a):(a))
-#define make_E_pulse(l) { \
-	GPIO_SetBits((l)->GPIO, (l)->E_Pin); \
-	vTaskDelay(1); \
-	GPIO_ResetBits((l)->GPIO, (l)->E_Pin); \
-}
-
-#define RS_0(l) {GPIO_ResetBits((l)->GPIO, (l)->RS_Pin);}
-#define RS_1(l) {GPIO_SetBits((l)->GPIO, (l)->RS_Pin);}
-
-#define RW_0(l) {GPIO_ResetBits((l)->GPIO, (l)->RW_Pin);}
-#define RW_1(l) {GPIO_SetBits((l)->GPIO, (l)->RW_Pin);}
 
 #define boundReset(l) { \
 	(l)->row = ((l)->row + (l)->col / 20) % 4; \
@@ -24,8 +13,17 @@
 	LCD_MOVE((l)->LCD, (l)->row, (l)->col); \
 }
 
+/* state configuration of RS and RW pins */
+enum {
+	RS_0 = 0, /* command mode */
+	RS_1 = 2, /* data mode */
+	RW_0 = 0, /* write mode */
+	RW_1 = 1  /* read mode */
+};
+
 static const int16_t line_addr[] = {0x80, 0xc0, 0x94, 0xd4};
 
+static void LCD_send(const LCD_InitTypeDef*, int, uint16_t);
 char *itoa(int32_t, uint32_t);
 void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str);
 void LCD_CMD(LCD_InitTypeDef *, uint16_t );
@@ -33,25 +31,32 @@ void LCD_DATA(LCD_InitTypeDef *, uint16_t);
 void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col);
 int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...);
 
-static void lSetDB(const LCD_InitTypeDef *lcd, uint16_t number)
+static void LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 {
 	uint16_t sum = 0;
 	register int i;
 
+	/* set data pins */
 	for (i = 0; i < 8; ++i)
-		sum |= (number >> i) & 0x1 ? lcd->DB_Pins[i] : 0;
-
+		sum |= (data >> i) & 0x1 ? lcd->DB_Pins[i] : 0;
 	GPIO_SetBits(lcd->GPIO, sum);
-}
 
-static void lResetDB(const LCD_InitTypeDef *lcd, uint16_t number)
-{
-	uint16_t sum = 0;
-	register int i;
+	/* set RS and RW pins */
+	if (ctrl & RS_1)
+		GPIO_SetBits(lcd->GPIO, lcd->RS_Pin);
+	else
+		GPIO_ResetBits(lcd->GPIO, lcd->RS_Pin);
+	if (ctrl & RW_1)
+		GPIO_SetBits(lcd->GPIO, lcd->RW_Pin);
+	else
+		GPIO_ResetBits(lcd->GPIO, lcd->RW_Pin);
 
-	for (i = 0; i < 8; ++i)
-		sum |= (number >> i) & 0x1 ? lcd->DB_Pins[i] : 0;
+	/* send a pulse on E pin */
+	GPIO_SetBits(lcd->GPIO, lcd->E_Pin);
+	vTaskDelay(1);
+	GPIO_ResetBits(lcd->GPIO, lcd->E_Pin);
 
+	/* reset data pins */
 	GPIO_ResetBits(lcd->GPIO, sum);
 }
 
@@ -82,27 +87,12 @@ void LCD_Init(LCD_InitTypeDef *l)
 
 void LCD_CMD(LCD_InitTypeDef *lcd, uint16_t cmd)
 {
-	lSetDB(lcd, cmd);
-	RS_0(lcd);
-	RW_0(lcd);
-
-	/* pulse */
-	make_E_pulse(lcd);
-
-	lResetDB(lcd, cmd);
+	LCD_send(lcd, RS_0|RW_0, cmd);
 }
 
 void LCD_DATA(LCD_InitTypeDef *lcd, uint16_t data)
 {
-	lSetDB(lcd, data);
-
-	RS_1(lcd);
-	RW_0(lcd);
-
-	/* pulse */
-	make_E_pulse(lcd);
-
-	lResetDB(lcd, data);
+	LCD_send(lcd, RS_1|RW_0, data);
 }
 
 void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col)
