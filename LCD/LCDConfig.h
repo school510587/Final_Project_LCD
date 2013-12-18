@@ -19,6 +19,10 @@ typedef struct {
 	uint16_t DB_Pins[8];
 	GPIO_TypeDef *GPIO;
 
+	/* window size */
+	uint8_t max_col;
+	uint8_t max_row;
+
 	/* current cursor position */
 	uint8_t col;
 	uint8_t row;

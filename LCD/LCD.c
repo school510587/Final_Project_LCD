@@ -8,8 +8,8 @@
 #define iabs(a) ((a)<0?(-a):(a))
 
 #define boundReset(l) { \
-	(l)->row = ((l)->row + (l)->col / 20) % 4; \
-	(l)->col = (l)->col % 20; \
+	(l)->row = ((l)->row + (l)->col / (l)->max_col) % (l)->max_row; \
+	(l)->col %= (l)->max_col; \
 	LCD_move((l), (l)->row, (l)->col); \
 }
 
@@ -116,7 +116,7 @@ int LCD_addstr(LCD_InitTypeDef *lcdctl, const char *str)
 
 int LCD_move(LCD_InitTypeDef *lcd, int row, int col)
 {
-	if (row < 0 || col < 0 || row >= 3 || col >= 19)
+	if (!lcd || row < 0 || col < 0 || row >= lcd->max_row - 1 || col >= lcd->max_col - 1)
 		return LCD_ERR;
 	return LCD_send(lcd, RS_0|RW_0, line_addr[row]+col);
 }
