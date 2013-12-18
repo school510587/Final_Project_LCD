@@ -1,4 +1,4 @@
-#include "LCDConfig.h"
+#include "LCD_curses.h"
 #include "FreeRTOS.h"
 #include "task.h"
 #include "main.h"

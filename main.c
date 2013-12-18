@@ -41,7 +41,7 @@ void EXTI0_IRQHandler(void)
 
 }
 
-#include "LCD/LCDConfig.h"
+#include "LCD/LCD_curses.h"
 
 int main(void)
 {
