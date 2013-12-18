@@ -23,6 +23,9 @@
 #define LCD_DB6 GPIO_Pin_9
 #define LCD_DB7 GPIO_Pin_10
 
+#define LCD_ERR -1
+#define LCD_OK   0
+
 typedef struct {
 	uint16_t RS_Pin;
 	uint16_t RW_Pin;
@@ -39,7 +42,9 @@ typedef struct {
 
 void LCD_Init(LCD_InitTypeDef *);
 
-void lwrite(LCD_InitTypeDef *, const char *);
+int LCD_addch(LCD_InitTypeDef*, uint16_t);
+int LCD_addstr(LCD_InitTypeDef*, const char*);
+int LCD_move(LCD_InitTypeDef*, int, int);
 int LCD_printf(LCD_InitTypeDef*, const char*, ...);
 
 /* commands */

@@ -10,7 +10,7 @@
 #define boundReset(l) { \
 	(l)->row = ((l)->row + (l)->col / 20) % 4; \
 	(l)->col = (l)->col % 20; \
-	LCD_MOVE((l), (l)->row, (l)->col); \
+	LCD_move((l), (l)->row, (l)->col); \
 }
 
 /* state configuration of RS and RW pins */
@@ -23,16 +23,16 @@ enum {
 
 static const int16_t line_addr[] = {0x80, 0xc0, 0x94, 0xd4};
 
-static void LCD_send(const LCD_InitTypeDef*, int, uint16_t);
 char *itoa(int32_t, uint32_t);
-void LCD_CMD(LCD_InitTypeDef *, uint16_t );
-void LCD_DATA(LCD_InitTypeDef *, uint16_t);
-void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col);
 
-static void LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
+/* The internal low-level LCD operation */
+static int LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 {
 	uint16_t sum = 0;
 	register int i;
+
+	if (!lcd)
+		return LCD_ERR;
 
 	/* set data pins */
 	for (i = 0; i < 8; ++i)
@@ -56,43 +56,38 @@ static void LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 
 	/* reset data pins */
 	GPIO_ResetBits(lcd->GPIO, sum);
+
+	return LCD_OK;
 }
 
 void LCD_Init(LCD_InitTypeDef *l)
 {
-	LCD_CMD(l, 0x38);
+	LCD_send(l, RS_0|RW_0, 0x38);
 	vTaskDelay(5);
 
-	LCD_CMD(l, 0x08);
+	LCD_send(l, RS_0|RW_0, 0x08);
 	vTaskDelay(5);
 
-	LCD_CMD(l, 0x01);
+	LCD_send(l, RS_0|RW_0, 0x01);
 	vTaskDelay(5);
 
-	LCD_CMD(l, 0x06);
+	LCD_send(l, RS_0|RW_0, 0x06);
 	vTaskDelay(5);
 
-	LCD_CMD(l, 0x0c);
+	LCD_send(l, RS_0|RW_0, 0x0c);
 	vTaskDelay(5);
 }
 
-void LCD_CMD(LCD_InitTypeDef *lcd, uint16_t cmd)
+int LCD_addch(LCD_InitTypeDef *lcd, uint16_t data)
 {
-	LCD_send(lcd, RS_0|RW_0, cmd);
+	return LCD_send(lcd, RS_1|RW_0, data);
 }
 
-void LCD_DATA(LCD_InitTypeDef *lcd, uint16_t data)
+int LCD_addstr(LCD_InitTypeDef *lcdctl, const char *str)
 {
-	LCD_send(lcd, RS_1|RW_0, data);
-}
+	if (!lcdctl)
+		return LCD_ERR;
 
-void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col)
-{
-	LCD_CMD(lcd, line_addr[row]+col);
-}
-
-void lwrite(LCD_InitTypeDef *lcdctl, const char *str)
-{
 	boundReset(lcdctl);
 	vTaskDelay(10);
 
@@ -105,7 +100,7 @@ void lwrite(LCD_InitTypeDef *lcdctl, const char *str)
 				lcdctl->col = 0;
 				break;
 			default:
-				LCD_DATA(lcdctl, *str);
+				LCD_addch(lcdctl, *str);
 				vTaskDelay(1);
 				lcdctl->col++;
 				break;
@@ -113,6 +108,15 @@ void lwrite(LCD_InitTypeDef *lcdctl, const char *str)
 
 		boundReset(lcdctl);
 	}
+
+	return LCD_OK;
+}
+
+int LCD_move(LCD_InitTypeDef *lcd, int row, int col)
+{
+	if (row < 0 || col < 0 || row >= 3 || col >= 19)
+		return LCD_ERR;
+	return LCD_send(lcd, RS_0|RW_0, line_addr[row]+col);
 }
 
 int LCD_printf(LCD_InitTypeDef *lcdctl, const char *str, ...)
@@ -127,12 +131,12 @@ int LCD_printf(LCD_InitTypeDef *lcdctl, const char *str, ...)
 			switch (str[p + 1]) {
 				case 'd': /* integer in dec */
 					vaint = va_arg(v1, int);
-					lwrite(lcdctl, itoa(vaint, 10));
+					LCD_addstr(lcdctl, itoa(vaint, 10));
 					p++;
 			}
 		}
 		else {
-			LCD_DATA(lcdctl, str[p]);
+			LCD_addch(lcdctl, str[p]);
 			lcdctl->col++;
 		}
 		boundReset(lcdctl);
