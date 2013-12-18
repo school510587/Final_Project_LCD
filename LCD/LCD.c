@@ -10,7 +10,7 @@
 #define boundReset(l) { \
 	(l)->row = ((l)->row + (l)->col / 20) % 4; \
 	(l)->col = (l)->col % 20; \
-	LCD_MOVE((l)->LCD, (l)->row, (l)->col); \
+	LCD_MOVE((l), (l)->row, (l)->col); \
 }
 
 /* state configuration of RS and RW pins */
@@ -25,11 +25,9 @@ static const int16_t line_addr[] = {0x80, 0xc0, 0x94, 0xd4};
 
 static void LCD_send(const LCD_InitTypeDef*, int, uint16_t);
 char *itoa(int32_t, uint32_t);
-void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str);
 void LCD_CMD(LCD_InitTypeDef *, uint16_t );
 void LCD_DATA(LCD_InitTypeDef *, uint16_t);
 void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col);
-int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...);
 
 static void LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 {
@@ -58,13 +56,6 @@ static void LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 
 	/* reset data pins */
 	GPIO_ResetBits(lcd->GPIO, sum);
-}
-
-LCD_ControllerTypeDef new_LCD_Controller(LCD_InitTypeDef *l)
-{
-	LCD_ControllerTypeDef c = {.LCD = l, .col = 0, .row = 0, .lprintf = LCD_printf};
-
-	return c;
 }
 
 void LCD_Init(LCD_InitTypeDef *l)
@@ -100,7 +91,7 @@ void LCD_MOVE(LCD_InitTypeDef *lcd, uint8_t row, uint8_t col)
 	LCD_CMD(lcd, line_addr[row]+col);
 }
 
-void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str)
+void lwrite(LCD_InitTypeDef *lcdctl, const char *str)
 {
 	boundReset(lcdctl);
 	vTaskDelay(10);
@@ -114,7 +105,7 @@ void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str)
 				lcdctl->col = 0;
 				break;
 			default:
-				LCD_DATA(lcdctl->LCD, *str);
+				LCD_DATA(lcdctl, *str);
 				vTaskDelay(1);
 				lcdctl->col++;
 				break;
@@ -124,7 +115,7 @@ void lwrite(LCD_ControllerTypeDef *lcdctl, const char *str)
 	}
 }
 
-int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...)
+int LCD_printf(LCD_InitTypeDef *lcdctl, const char *str, ...)
 {
 	int p = 0, vaint;
 	va_list v1;
@@ -141,7 +132,7 @@ int32_t LCD_printf(LCD_ControllerTypeDef *lcdctl, const char *str, ...)
 			}
 		}
 		else {
-			LCD_DATA(lcdctl->LCD, str[p]);
+			LCD_DATA(lcdctl, str[p]);
 			lcdctl->col++;
 		}
 		boundReset(lcdctl);

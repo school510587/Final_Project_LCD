@@ -31,24 +31,16 @@ typedef struct {
 	/* DB 0 to 7 */
 	uint16_t DB_Pins[8];
 	GPIO_TypeDef *GPIO;
+
+	/* current cursor position */
+	uint8_t col;
+	uint8_t row;
 } LCD_InitTypeDef;
 
-struct LCD_Controller;
-
-typedef struct LCD_Controller LCD_ControllerTypeDef;
-
-struct LCD_Controller{
-	/* Which LCD used */
-	LCD_InitTypeDef *LCD;
-	uint8_t col, row;
-
-	int32_t (*lprintf)(LCD_ControllerTypeDef *, const char *, ...);
-};
-
-
-LCD_ControllerTypeDef new_LCD_Controller(LCD_InitTypeDef *);
 void LCD_Init(LCD_InitTypeDef *);
-void lwrite(LCD_ControllerTypeDef *, const char *);
+
+void lwrite(LCD_InitTypeDef *, const char *);
+int LCD_printf(LCD_InitTypeDef*, const char*, ...);
 
 /* commands */
 enum LCD_CMD {
