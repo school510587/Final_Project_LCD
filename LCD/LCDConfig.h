@@ -7,22 +7,6 @@
 	LCD Library for STM32Fx
 */
 
-#define LCD_GPIO GPIOE
-/* high=data mode Low=command mode */
-#define LCD_RS_Pin GPIO_Pin_11
-/* high=read low=write */
-#define LCD_RW_Pin GPIO_Pin_12
-#define LCD_E_Pin GPIO_Pin_13
-
-#define LCD_DB0 GPIO_Pin_3
-#define LCD_DB1 GPIO_Pin_4
-#define LCD_DB2 GPIO_Pin_5
-#define LCD_DB3 GPIO_Pin_6
-#define LCD_DB4 GPIO_Pin_7
-#define LCD_DB5 GPIO_Pin_8
-#define LCD_DB6 GPIO_Pin_9
-#define LCD_DB7 GPIO_Pin_10
-
 #define LCD_ERR -1
 #define LCD_OK   0
 
