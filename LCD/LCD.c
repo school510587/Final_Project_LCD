@@ -62,6 +62,8 @@ static int LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 
 void LCD_Init(LCD_InitTypeDef *l)
 {
+	GPIO_ResetBits(l->GPIO, l->RS_Pin | l->RW_Pin | l->E_Pin);
+
 	LCD_send(l, RS_0|RW_0, 0x38);
 	vTaskDelay(5);
 

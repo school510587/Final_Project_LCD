@@ -101,12 +101,10 @@ void GPIO_Output_Config(void){
 
 static void LCD_task(void *pvParameters)
 {
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
-	GPIO_Output_Config();
-	GPIO_ResetBits(GPIOE, GPIO_Pin_11|GPIO_Pin_12|GPIO_Pin_13);
-
 	LCD_InitTypeDef lcd = {.GPIO = GPIOE, .RS_Pin = GPIO_Pin_11, .RW_Pin = GPIO_Pin_12, .E_Pin = GPIO_Pin_13, .DB_Pins = {GPIO_Pin_3, GPIO_Pin_4, GPIO_Pin_5, GPIO_Pin_6, GPIO_Pin_7, GPIO_Pin_8, GPIO_Pin_9, GPIO_Pin_10}, .col = 0, .row = 0};
 
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOE, ENABLE);
+	GPIO_Output_Config();
 	LCD_Init(&lcd);
 
 	vTaskDelay(5);
