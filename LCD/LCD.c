@@ -23,8 +23,6 @@ enum {
 
 static const int16_t line_addr[] = {0x80, 0xc0, 0x94, 0xd4};
 
-char *itoa(int32_t, uint32_t);
-
 /* The internal low-level LCD operation */
 static int LCD_send(const LCD_InitTypeDef *lcd, int ctrl, uint16_t data)
 {
@@ -119,51 +117,4 @@ int LCD_move(LCD_InitTypeDef *lcd, int row, int col)
 	if (!lcd || row < 0 || col < 0 || row >= lcd->max_row - 1 || col >= lcd->max_col - 1)
 		return LCD_ERR;
 	return LCD_send(lcd, RS_0|RW_0, line_addr[row]+col);
-}
-
-int LCD_printf(LCD_InitTypeDef *lcdctl, const char *str, ...)
-{
-	int p = 0, vaint;
-	va_list v1;
-
-	va_start(v1, str);
-	boundReset(lcdctl);
-	while (str[p]) {
-		if (str[p] == '%') {
-			switch (str[p + 1]) {
-				case 'd': /* integer in dec */
-					vaint = va_arg(v1, int);
-					LCD_addstr(lcdctl, itoa(vaint, 10));
-					p++;
-			}
-		}
-		else {
-			LCD_addch(lcdctl, str[p]);
-			lcdctl->col++;
-		}
-		boundReset(lcdctl);
-		vTaskDelay(1);
-		p++;
-	}
-	va_end(v1);
-	return 0;
-}
-
-char *itoa(int32_t n, uint32_t base)
-{
-	static char buf[32] = {0};
-	int neg = n < 0 ? 1 : 0;
-	uint32_t num = iabs(n);
-
-	if (num == 0) {
-		buf[30] = '0';
-		return &buf[30];
-	}
-	int i;
-	for (i = 30; num != 1; --i, num/=base)
-		buf[i] = "0123456789abcdef"[num % base];
-
-	buf[i] = '-';
-
-	return neg ? &buf[i]: &buf[i + 1];
 }

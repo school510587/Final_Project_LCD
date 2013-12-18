@@ -27,8 +27,6 @@ typedef struct {
 
 void LCD_Init(LCD_InitTypeDef *);
 
-int LCD_printf(LCD_InitTypeDef*, const char*, ...);
-
 /* commands */
 enum LCD_CMD {
 	LCD_CLEARDISPLAY	=0x01,
