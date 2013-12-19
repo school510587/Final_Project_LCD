@@ -80,7 +80,25 @@ void LCD_Init(LCD_InitTypeDef *l)
 
 int LCD_addch(LCD_InitTypeDef *lcd, uint16_t data)
 {
-	return LCD_send(lcd, RS_1|RW_0, data);
+	int r = LCD_OK;
+
+	switch (data) {
+		case '\n':
+			lcd->row++;
+		break;
+		case '\r':
+			lcd->col = 0;
+		break;
+		default:
+			r = LCD_send(lcd, RS_1|RW_0, data);
+			lcd->col++;
+			vTaskDelay(1);
+		break;
+	}
+	boundReset(lcd);
+	vTaskDelay(5);
+
+	return r;
 }
 
 int LCD_addstr(LCD_InitTypeDef *lcdctl, const char *str)
@@ -88,26 +106,8 @@ int LCD_addstr(LCD_InitTypeDef *lcdctl, const char *str)
 	if (!lcdctl)
 		return LCD_ERR;
 
-	boundReset(lcdctl);
-	vTaskDelay(10);
-
-	for (; *str; str++) {
-		switch (*str) {
-			case '\n':
-				lcdctl->row++;
-				break;
-			case '\r':
-				lcdctl->col = 0;
-				break;
-			default:
-				LCD_addch(lcdctl, *str);
-				vTaskDelay(1);
-				lcdctl->col++;
-				break;
-		}
-
-		boundReset(lcdctl);
-	}
+	for (; *str; str++)
+		LCD_addch(lcdctl, *str);
 
 	return LCD_OK;
 }
